@@ -1,0 +1,47 @@
+version: "3.9"
+services:
+  database:
+    container_name: point-market-postgres
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - TZ=Asia/Seoul
+    networks:
+      - point-market-network
+
+  webapp:
+    container_name: point-market-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_PROFILES_ACTIVE: local
+    networks:
+      - point-market-network
+    depends_on:
+      - "database"
+
+  redis:
+    container_name: point-market-redis
+    hostname: redis_boot
+    image: redis:alpine
+    command: redis-server --port 6379
+    labels:
+      - "name=redis"
+      - "mode=standalone"
+    ports:
+      - "6379:6379"
+
+networks:
+  point-market-network:
