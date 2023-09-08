@@ -1,8 +1,8 @@
 package com.ksmarter.pointmarket.security.jwt.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ksmarter.pointmarket.domain.account.common.dto.CommonResponse;
-import com.ksmarter.pointmarket.domain.account.common.dto.ErrorResponse;
+import com.ksmarter.pointmarket.domain.common.dto.CommonResponse;
+import com.ksmarter.pointmarket.domain.common.dto.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

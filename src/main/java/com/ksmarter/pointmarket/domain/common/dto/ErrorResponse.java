@@ -1,4 +1,4 @@
-package com.ksmarter.pointmarket.domain.account.common.dto;
+package com.ksmarter.pointmarket.domain.common.dto;
 
 import lombok.Builder;
 
