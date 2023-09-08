@@ -18,11 +18,11 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(final String userId) {
-        Account account = accountRepository.findOneWithAuthoritiesByUserid(userId)
-                .orElseThrow(() -> new UsernameNotFoundException(userId + " -> 데이터베이스에서 찾을 수 없습니다."));
+    public UserDetails loadUserByUsername(final String userid) {
+        Account account = accountRepository.findOneWithAuthoritiesByUserid(userid)
+                .orElseThrow(() -> new UsernameNotFoundException(userid + " -> 데이터베이스에서 찾을 수 없습니다."));
 
-        if (!account.isActivated()) throw new RuntimeException(account.getUsername() + " -> 활성화되어 있지 않습니다.");
+        if (!account.isActivated()) throw new RuntimeException(account.getUserid() + " -> 활성화되어 있지 않습니다.");
         return new AccountAdapter(account);
     }
 
