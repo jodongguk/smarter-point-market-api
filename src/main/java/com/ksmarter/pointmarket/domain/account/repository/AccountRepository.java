@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface AccountRepository {
     @EntityGraph(attributePaths = "authorities")
-    Optional<Account> findOneWithAuthoritiesByUsername(String username);
+    Optional<Account> findOneWithAuthoritiesByUserid(String userid);
 }

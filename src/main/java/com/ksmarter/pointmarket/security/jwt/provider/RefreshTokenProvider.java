@@ -17,7 +17,6 @@ public class RefreshTokenProvider extends TokenProvider {
         super(secret, tokenValidityInSeconds);
     }
 
-    // 토큰 생성
     public String createToken(Authentication authentication, Long tokenWeight) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -36,7 +35,6 @@ public class RefreshTokenProvider extends TokenProvider {
     }
 
     public long getTokenWeight(String token) {
-        // 토큰에서 가중치를 꺼내 반환한다.
         Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
         return Long.valueOf(String.valueOf(claims.get(WEIGHT_KEY)));
     }
