@@ -1,0 +1,17 @@
+extend type QueryResolver {
+    institutes: [Institute]
+    institute(id: ID!): Institute!
+}
+
+type Institute {
+    id: ID
+    owner: String
+    tel: String
+    zip: String
+    name: String
+    addr1: String
+    addr2: String
+    businessRegistrationNumber: String
+
+    children: [Account]
+}

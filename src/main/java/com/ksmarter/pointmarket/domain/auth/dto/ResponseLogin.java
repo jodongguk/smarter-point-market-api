@@ -1,8 +1,8 @@
-package com.ksmarter.pointmarket.domain.account.dto;
+package com.ksmarter.pointmarket.domain.auth.dto;
 
 import lombok.Builder;
 
-public record ResponseAccount() {
+public record ResponseLogin() {
 
     @Builder
     public record Token(

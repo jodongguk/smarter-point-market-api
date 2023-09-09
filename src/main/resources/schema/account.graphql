@@ -1,0 +1,14 @@
+extend type QueryResolver {
+    accounts: [Account]
+    account(id: ID!): Account!
+}
+
+type Account {
+    id: ID
+    userid: String
+    name: String
+    activated: Boolean
+
+    authorities: [Authority]
+    children: [Account]
+}

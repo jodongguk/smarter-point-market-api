@@ -1,0 +1,15 @@
+GRAPHQL http://localhost:8080/graphql
+
+mutation login($userid: String="admin", $password: String="admin") {
+  login(userid: $userid, password: $password) {
+    accessToken
+    refreshToken
+  }
+}
+###
+GRAPHQL http://localhost:8080/graphql
+
+query {
+service
+}
+

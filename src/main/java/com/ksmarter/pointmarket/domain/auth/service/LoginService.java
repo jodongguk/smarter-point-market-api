@@ -1,32 +1,41 @@
-package com.ksmarter.pointmarket.domain.account.service;
+package com.ksmarter.pointmarket.domain.auth.service;
 
 import com.ksmarter.pointmarket.domain.account.domain.Account;
 import com.ksmarter.pointmarket.domain.account.domain.AccountAdapter;
-import com.ksmarter.pointmarket.domain.account.dto.ResponseAccount;
+import com.ksmarter.pointmarket.domain.auth.dto.ResponseLogin;
 import com.ksmarter.pointmarket.domain.account.repository.AccountRepository;
 import com.ksmarter.pointmarket.security.jwt.provider.RefreshTokenProvider;
 import com.ksmarter.pointmarket.security.jwt.provider.TokenProvider;
 import com.ksmarter.pointmarket.security.jwt.exception.InvalidRefreshTokenException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-public class AccountService {
+@Slf4j
+@Service
+public class LoginService {
     private final TokenProvider tokenProvider;
     private final RefreshTokenProvider refreshTokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final AccountRepository accountRepository;
 
-    public AccountService(TokenProvider tokenProvider, RefreshTokenProvider refreshTokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, AccountRepository accountRepository) {
+    private final PasswordEncoder passwordEncoder;
+
+    public LoginService(TokenProvider tokenProvider, RefreshTokenProvider refreshTokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
         this.tokenProvider = tokenProvider;
         this.refreshTokenProvider = refreshTokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.accountRepository = accountRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public ResponseAccount.Token authenticate(String userid, String password) {
+    public ResponseLogin.Token authenticate(String userid, String password) {
+
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userid, password);
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
@@ -36,14 +45,14 @@ public class AccountService {
         Long tokenWeight = ((AccountAdapter) authentication.getPrincipal()).getAccount().getTokenWeight();
         String refreshToken = refreshTokenProvider.createToken(authentication, tokenWeight);
 
-        return ResponseAccount.Token.builder()
+        return ResponseLogin.Token.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
     }
 
     @Transactional(readOnly = true)
-    public ResponseAccount.Token refreshToken(String refreshToken) {
+    public ResponseLogin.Token refreshToken(String refreshToken) {
 
         if (!refreshTokenProvider.validateToken(refreshToken)) throw new InvalidRefreshTokenException();
 
@@ -58,7 +67,7 @@ public class AccountService {
 
         String accessToken = tokenProvider.createToken(authentication);
 
-        return ResponseAccount.Token.builder()
+        return ResponseLogin.Token.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();

@@ -1,0 +1,18 @@
+type QueryResolver {
+    service: String
+}
+
+type MutationResolver {
+    login(userid: String, password: String): Token
+    refresh(refreshToken: String): Token
+}
+
+type Token {
+    accessToken: String
+    refreshToken: String
+}
+
+schema {
+    query: QueryResolver
+    mutation: MutationResolver
+}

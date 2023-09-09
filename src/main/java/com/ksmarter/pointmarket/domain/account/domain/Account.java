@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.IndexColumn;
 
 import java.util.Set;
 
@@ -34,8 +33,8 @@ public class Account {
     private Long tokenWeight;
 
     @Comment("사용자 이름")
-    @Column(name = "username", length = 50)
-    private String username;
+    @Column(name = "name", length = 50)
+    private String name;
 
     @Comment("사용자 활성 유무")
     @Column(name = "activated")
@@ -48,11 +47,17 @@ public class Account {
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
     private Set<Authority> authorities;
 
+    @ManyToMany
+    @Comment("사용자 자녀")
+    @JoinTable(name = "account_child",
+            joinColumns = {@JoinColumn(name = "account_id", referencedColumnName = "account_id")})
+    private Set<Account> children;
+
     @Builder
-    public Account(String userid, String password, String username, Set<Authority> authorities, boolean activated) {
+    public Account(String userid, String password, String name, Set<Authority> authorities, boolean activated) {
         this.userid = userid;
         this.password = password;
-        this.username = username;
+        this.name = name;
         this.authorities = authorities;
         this.activated = activated;
         this.tokenWeight = 1L; // 초기 가중치는 1

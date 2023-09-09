@@ -1,0 +1,8 @@
+extend type QueryResolver {
+    authorities: [Authority]
+    authority: Authority!
+}
+
+type Authority {
+    authorityName: String
+}

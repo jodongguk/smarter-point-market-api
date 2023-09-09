@@ -55,17 +55,18 @@ public class SecurityConfig {
                         )
                 )
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers(
                             "/h2/**",
                             "/favicon.ico",
                             "/error",
-                            "/docs/*"
+                            "/docs/*",
+                            "/voyager"
                     ).permitAll();
 
                     authorize.requestMatchers(
-                            "/api/hello"
+                            "/graphql/**",
+                            "/graphiql/**"
                     ).permitAll().anyRequest().authenticated();
                 })
                 .addFilterBefore(customJwtFilter, UsernamePasswordAuthenticationFilter.class);
