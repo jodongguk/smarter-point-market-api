@@ -1,9 +1,6 @@
-package com.ksmarter.pointmarket.domain.franchisor.fetcher;
+package com.ksmarter.pointmarket.domain.franchisor.gql.fetcher;
 
 import com.ksmarter.pointmarket.constants.DgsTypeConst;
-import com.ksmarter.pointmarket.domain.account.context.AccountContextBuilder;
-import com.ksmarter.pointmarket.domain.account.domain.Account;
-import com.ksmarter.pointmarket.domain.account.repository.AccountRepository;
 import com.ksmarter.pointmarket.domain.franchisor.domain.Franchisor;
 import com.ksmarter.pointmarket.domain.franchisor.repository.FranchisorRepository;
 import com.netflix.graphql.dgs.DgsComponent;

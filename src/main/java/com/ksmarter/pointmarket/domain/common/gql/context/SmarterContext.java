@@ -1,4 +1,4 @@
-package com.ksmarter.pointmarket.domain.common.context;
+package com.ksmarter.pointmarket.domain.common.gql.context;
 
 import lombok.Getter;
 

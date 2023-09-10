@@ -1,7 +1,7 @@
-package com.ksmarter.pointmarket.domain.account.fetcher;
+package com.ksmarter.pointmarket.domain.account.gql.fetcher;
 
 import com.ksmarter.pointmarket.constants.DgsTypeConst;
-import com.ksmarter.pointmarket.domain.account.context.AccountContextBuilder;
+import com.ksmarter.pointmarket.domain.account.gql.context.AccountContextBuilder;
 import com.ksmarter.pointmarket.domain.account.domain.Account;
 import com.ksmarter.pointmarket.domain.account.repository.AccountRepository;
 import com.ksmarter.pointmarket.generated.types.AccountFilter;

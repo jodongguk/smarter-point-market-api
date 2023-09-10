@@ -1,4 +1,4 @@
-package com.ksmarter.pointmarket.domain.auth.fetcher;
+package com.ksmarter.pointmarket.domain.auth.gql.fetcher;
 
 import com.ksmarter.pointmarket.domain.auth.dto.ResponseLogin;
 import com.ksmarter.pointmarket.domain.auth.service.LoginService;

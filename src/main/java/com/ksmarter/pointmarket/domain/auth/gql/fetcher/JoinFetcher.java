@@ -1,4 +1,4 @@
-package com.ksmarter.pointmarket.domain.auth.fetcher;
+package com.ksmarter.pointmarket.domain.auth.gql.fetcher;
 
 import com.ksmarter.pointmarket.domain.account.service.AccountJoinService;
 import com.netflix.graphql.dgs.DgsComponent;

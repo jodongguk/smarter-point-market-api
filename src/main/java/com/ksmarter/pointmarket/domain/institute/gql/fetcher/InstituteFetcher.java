@@ -1,4 +1,4 @@
-package com.ksmarter.pointmarket.domain.institute.fetcher;
+package com.ksmarter.pointmarket.domain.institute.gql.fetcher;
 
 import com.ksmarter.pointmarket.constants.DgsTypeConst;
 import com.ksmarter.pointmarket.domain.franchisor.domain.Franchisor;

@@ -1,4 +1,4 @@
-package com.ksmarter.pointmarket.domain.common.fetcher;
+package com.ksmarter.pointmarket.domain.common.gql.fetcher;
 
 import com.ksmarter.pointmarket.generated.DgsConstants;
 import com.netflix.graphql.dgs.DgsComponent;

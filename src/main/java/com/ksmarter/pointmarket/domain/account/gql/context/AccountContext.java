@@ -1,4 +1,4 @@
-package com.ksmarter.pointmarket.domain.account.context;
+package com.ksmarter.pointmarket.domain.account.gql.context;
 
 import com.ksmarter.pointmarket.domain.account.domain.Account;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.ksmarter.pointmarket.domain.common.context;
+package com.ksmarter.pointmarket.domain.common.gql.context;
 
 import com.netflix.graphql.dgs.context.DgsCustomContextBuilderWithRequest;
 import lombok.extern.slf4j.Slf4j;
