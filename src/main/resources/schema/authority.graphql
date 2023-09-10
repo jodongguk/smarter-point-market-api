@@ -4,5 +4,5 @@ extend type QueryResolver {
 }
 
 type Authority {
-    authorityName: String
+    authorityName: String!
 }

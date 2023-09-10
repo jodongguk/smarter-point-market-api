@@ -1,17 +1,22 @@
 extend type QueryResolver {
-    institutes: [Institute]
+    institutes(filter: InstituteFilter, first:Int, after:String): InstituteConnection
     institute(id: ID!): Institute!
 }
 
-type Institute {
-    id: ID
+type Institute @connection {
+    id: ID!
+    name: String!
     owner: String
     tel: String
     zip: String
-    name: String
     addr1: String
     addr2: String
     businessRegistrationNumber: String
 
     children: [Account]
+}
+
+input InstituteFilter {
+    name: String
+    owner: String
 }

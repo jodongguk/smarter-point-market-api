@@ -1,0 +1,20 @@
+extend type QueryResolver {
+    franchisors(filter: FranchisorFilter, first:Int, after:String): FranchisorConnection
+    franchisor(id: ID!): Franchisor!
+}
+
+type Franchisor @connection {
+    id: ID!
+    name: String!
+    owner: String
+    tel: String
+    zip: String
+    addr1: String
+    addr2: String
+    business_registration_number: String
+}
+
+input FranchisorFilter {
+    name: String
+    owner: String
+}

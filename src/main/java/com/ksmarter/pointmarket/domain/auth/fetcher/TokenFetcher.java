@@ -2,15 +2,14 @@ package com.ksmarter.pointmarket.domain.auth.fetcher;
 
 import com.ksmarter.pointmarket.domain.auth.dto.ResponseLogin;
 import com.ksmarter.pointmarket.domain.auth.service.LoginService;
-import com.ksmarter.pointmarket.domain.common.context.SmarterContext;
-import com.ksmarter.pointmarket.generated.types.TokenInput;
 import com.ksmarter.pointmarket.security.jwt.filter.CustomJwtFilter;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsData;
-import com.netflix.graphql.dgs.DgsMutation;
+import com.netflix.graphql.dgs.DgsDataFetchingEnvironment;
 import com.netflix.graphql.dgs.InputArgument;
-import com.netflix.graphql.dgs.context.DgsContext;
-import graphql.schema.DataFetchingEnvironment;
+import com.netflix.graphql.dgs.internal.DgsWebMvcRequestData;
+import jakarta.annotation.security.PermitAll;
+import org.springframework.web.context.request.ServletWebRequest;
 
 @DgsComponent
 public class TokenFetcher {
@@ -21,8 +20,9 @@ public class TokenFetcher {
         this.loginService = loginService;
     }
 
+    @PermitAll
     @DgsData(parentType = "MutationResolver")
-    public ResponseLogin.Token login(DataFetchingEnvironment dfe,
+    public ResponseLogin.Token login(DgsDataFetchingEnvironment dfe,
                                      @InputArgument String userid,
                                      @InputArgument String password) {
 
@@ -33,8 +33,9 @@ public class TokenFetcher {
         return token;
     }
 
+    @PermitAll
     @DgsData(parentType = "MutationResolver")
-    public ResponseLogin.Token refresh(DataFetchingEnvironment dfe,
+    public ResponseLogin.Token refresh(DgsDataFetchingEnvironment dfe,
                                        @InputArgument String refreshToken) {
         ResponseLogin.Token token = loginService.refreshToken(refreshToken);
 
@@ -44,7 +45,9 @@ public class TokenFetcher {
     }
 
 
-    private void setAuthorizationToken(DataFetchingEnvironment dfe, ResponseLogin.Token token) {
-        DgsContext.getRequestData(dfe).getHeaders().add(CustomJwtFilter.AUTHORIZATION_HEADER, "Bearer " + token.accessToken());
+    private void setAuthorizationToken(DgsDataFetchingEnvironment dfe, ResponseLogin.Token token) {
+        DgsWebMvcRequestData requestData = (DgsWebMvcRequestData) dfe.getDgsContext().getRequestData();
+        ServletWebRequest webRequest = (ServletWebRequest) requestData.getWebRequest();
+        webRequest.getResponse().addHeader(CustomJwtFilter.AUTHORIZATION_HEADER, "Bearer " + token.accessToken());
     }
 }

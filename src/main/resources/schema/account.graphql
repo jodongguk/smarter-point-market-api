@@ -1,9 +1,9 @@
 extend type QueryResolver {
-    accounts: [Account]
+    accounts(filter: AccountFilter, first:Int, after:String): AccountConnection
     account(id: ID!): Account!
 }
 
-type Account {
+type Account @connection {
     id: ID
     userid: String
     name: String
@@ -11,4 +11,12 @@ type Account {
 
     authorities: [Authority]
     children: [Account]
+    institutes: [Institute]
+    franchisors: [Franchisor]
+}
+
+input AccountFilter {
+    userid: String
+    name: String
+    activated: Boolean
 }

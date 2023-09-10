@@ -1,7 +1,7 @@
 package com.ksmarter.pointmarket.domain.auth.service;
 
 import com.ksmarter.pointmarket.domain.account.domain.Account;
-import com.ksmarter.pointmarket.domain.account.domain.AccountAdapter;
+import com.ksmarter.pointmarket.domain.account.adapter.AccountAdapter;
 import com.ksmarter.pointmarket.domain.auth.dto.ResponseLogin;
 import com.ksmarter.pointmarket.domain.account.repository.AccountRepository;
 import com.ksmarter.pointmarket.security.jwt.provider.RefreshTokenProvider;

@@ -2,9 +2,10 @@ package com.ksmarter.pointmarket.security;
 
 import com.ksmarter.pointmarket.security.jwt.filter.CustomJwtFilter;
 import com.ksmarter.pointmarket.security.jwt.handler.JwtAccessDeniedHandler;
-import com.ksmarter.pointmarket.security.jwt.JwtAuthenticationEntryPoint;
+import com.ksmarter.pointmarket.security.jwt.handler.JwtAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,6 +20,7 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
     private final CorsFilter corsFilter;
@@ -42,34 +44,25 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity, CustomJwtFilter customJwtFilter) throws Exception {
-        httpSecurity
-                .csrf(AbstractHttpConfigurer::disable)
-                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling(authenticationManager  -> authenticationManager
-                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                        .accessDeniedHandler(jwtAccessDeniedHandler)
-                )
-                .headers(headers -> headers
-                        .frameOptions(frameOptions -> frameOptions
-                                .sameOrigin()
-                        )
-                )
-                .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers(
-                            "/h2/**",
-                            "/favicon.ico",
-                            "/error",
-                            "/docs/*",
-                            "/voyager"
-                    ).permitAll();
 
-                    authorize.requestMatchers(
-                            "/graphql/**",
-                            "/graphiql/**"
-                    ).permitAll().anyRequest().authenticated();
-                })
-                .addFilterBefore(customJwtFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity
+                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests(registry -> registry
+                        .requestMatchers(
+                                "/graphql/**",
+                                "/graphiql/**"
+                        )
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated()
+                )
+                .addFilterBefore(customJwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .logout(AbstractHttpConfigurer::disable)
+                .anonymous(AbstractHttpConfigurer::disable);
 
         return httpSecurity.build();
     }

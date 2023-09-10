@@ -1,6 +1,7 @@
 package com.ksmarter.pointmarket.domain.institute.domain;
 
 import com.ksmarter.pointmarket.domain.account.domain.Account;
+import com.ksmarter.pointmarket.domain.common.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.Set;
 @Comment("학원정보")
 @Getter
 @NoArgsConstructor
-public class Institute {
+public class Institute extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

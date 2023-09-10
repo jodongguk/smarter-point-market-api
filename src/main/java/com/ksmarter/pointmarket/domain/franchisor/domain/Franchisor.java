@@ -1,5 +1,6 @@
 package com.ksmarter.pointmarket.domain.franchisor.domain;
 
+import com.ksmarter.pointmarket.domain.common.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.hibernate.annotations.Comment;
@@ -8,7 +9,7 @@ import org.hibernate.annotations.Comment;
 @Table(name = "franchisor")
 @Comment("가맹점 정보")
 @Getter
-public class Franchisor {
+public class Franchisor extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

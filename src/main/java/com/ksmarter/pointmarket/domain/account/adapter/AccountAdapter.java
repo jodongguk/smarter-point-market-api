@@ -1,4 +1,4 @@
-package com.ksmarter.pointmarket.domain.account.domain;
+package com.ksmarter.pointmarket.domain.account.adapter;
 
 import com.ksmarter.pointmarket.domain.account.domain.Account;
 import com.ksmarter.pointmarket.domain.account.domain.Authority;

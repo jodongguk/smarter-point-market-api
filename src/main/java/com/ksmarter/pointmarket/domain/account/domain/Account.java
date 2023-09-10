@@ -1,5 +1,8 @@
 package com.ksmarter.pointmarket.domain.account.domain;
 
+import com.ksmarter.pointmarket.domain.common.domain.BaseEntity;
+import com.ksmarter.pointmarket.domain.franchisor.domain.Franchisor;
+import com.ksmarter.pointmarket.domain.institute.domain.Institute;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +16,7 @@ import java.util.Set;
 @Table(name = "account")
 @Getter
 @NoArgsConstructor
-public class Account {
+public class Account extends BaseEntity {
 
     @Id
     @Comment("사용자 고유번호")
@@ -52,6 +55,18 @@ public class Account {
     @JoinTable(name = "account_child",
             joinColumns = {@JoinColumn(name = "account_id", referencedColumnName = "account_id")})
     private Set<Account> children;
+    
+    @ManyToMany
+    @Comment("사용자 학원 정보")
+    @JoinTable(name = "account_institute",
+            joinColumns = {@JoinColumn(name = "account_id", referencedColumnName = "account_id")})
+    private Set<Institute> institutes;
+    
+    @ManyToMany
+    @Comment("사용자 가맹점 정보")
+    @JoinTable(name = "account_franchisor",
+            joinColumns = {@JoinColumn(name = "account_id", referencedColumnName = "account_id")})
+    private Set<Franchisor> franchisors;
 
     @Builder
     public Account(String userid, String password, String name, Set<Authority> authorities, boolean activated) {
