@@ -2,9 +2,6 @@ server:
   port: 8080
 
 spring:
-  config:
-    activate:
-      on-profile: local
   data:
     redis:
       host: localhost
@@ -28,6 +25,11 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        envers:
+          track_entities_changed_in_revision: true
+          audit_table_suffix: _history
+          revision_field_name: revision_id
+          revision_type_field_name: revision_type
     defer-datasource-initialization: true
 
 jwt:
