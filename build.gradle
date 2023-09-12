@@ -1,7 +1,7 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.1.3'
-    id 'io.spring.dependency-management' version '1.1.3'
+    id 'org.springframework.boot' version "3.1.3"
+    id 'io.spring.dependency-management' version "1.1.3"
     id "com.netflix.dgs.codegen" version "6.0.2"
 }
 
@@ -10,6 +10,11 @@ version = '0.0.1-SNAPSHOT'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
+}
+
+ext {
+    dgsVersion = '7.5.1'
+    springBootVersion = '3.1.3'
 }
 
 configurations {
@@ -24,39 +29,38 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:latest.release")
+        mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:${dgsVersion}")
     }
 }
 
 dependencies {
-    implementation(platform('com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:latest.release'))
-    implementation 'com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter'
-    implementation 'com.netflix.graphql.dgs:graphql-dgs-pagination'
-    implementation 'com.netflix.graphql.dgs:graphql-dgs-extended-scalars'
-    implementation 'com.netflix.graphql.dgs:graphql-dgs-extended-validation'
+    implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:${dgsVersion}"))
+    implementation "com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter:${dgsVersion}"
+    implementation "com.netflix.graphql.dgs:graphql-dgs-pagination:${dgsVersion}"
+    implementation "com.netflix.graphql.dgs:graphql-dgs-extended-scalars:${dgsVersion}"
+    implementation "com.netflix.graphql.dgs:graphql-dgs-extended-validation:${dgsVersion}"
 
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-data-redis:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-cache:${springBootVersion}"
 
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.springframework.boot:spring-boot-starter-cache'
 
+    implementation "org.flywaydb:flyway-core"
+    implementation "org.postgresql:postgresql:42.6.0"
 
-    implementation 'org.flywaydb:flyway-core'
-    implementation 'org.postgresql:postgresql:42.6.0'
+    implementation "io.jsonwebtoken:jjwt-api:0.11.5"
+    runtimeOnly "io.jsonwebtoken:jjwt-impl:0.11.5"
+    runtimeOnly "io.jsonwebtoken:jjwt-jackson:0.11.5"
+    compileOnly "org.projectlombok:lombok"
 
-    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
-    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
-    compileOnly 'org.projectlombok:lombok'
-
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
-    testImplementation 'com.netflix.graphql.dgs:graphql-dgs'
+    developmentOnly "org.springframework.boot:spring-boot-devtools"
+    annotationProcessor "org.projectlombok:lombok"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.security:spring-security-test"
+    testImplementation "com.netflix.graphql.dgs:graphql-dgs"
 }
 
 tasks.named('test') {
@@ -68,12 +72,12 @@ generateJava {
     packageName = 'com.ksmarter.pointmarket.generated' // The package name to use to generate sources
     generateClient = true // Enable generating the type safe query API
     typeMapping = [
-            "PageInfo": "graphql.relay.PageInfo",
-            "Edge": "graphql.relay.Edge",
-            "Connection": "graphql.relay.Connection",
+            "PageInfo"            : "graphql.relay.PageInfo",
+            "Edge"                : "graphql.relay.Edge",
+            "Connection"          : "graphql.relay.Connection",
 
-            "AccountConnection": "graphql.relay.SimpleListConnection<Account>",
+            "AccountConnection"   : "graphql.relay.SimpleListConnection<Account>",
             "FranchisorConnection": "graphql.relay.SimpleListConnection<Franchisor>",
-            "InstituteConnection": "graphql.relay.SimpleListConnection<Institute>"
+            "InstituteConnection" : "graphql.relay.SimpleListConnection<Institute>"
     ]
 }
