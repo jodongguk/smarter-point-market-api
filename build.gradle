@@ -73,12 +73,14 @@ generateJava {
     packageName = 'com.ksmarter.pointmarket.generated' // The package name to use to generate sources
     generateClient = true // Enable generating the type safe query API
     typeMapping = [
-            "PageInfo"            : "graphql.relay.PageInfo",
-            "Edge"                : "graphql.relay.Edge",
-            "Connection"          : "graphql.relay.Connection",
+            "PageInfo"              : "graphql.relay.PageInfo",
+            "Edge"                  : "graphql.relay.Edge",
+            "Connection"            : "graphql.relay.Connection",
 
-            "AccountConnection"   : "graphql.relay.SimpleListConnection<Account>",
-            "FranchisorConnection": "graphql.relay.SimpleListConnection<Franchisor>",
-            "InstituteConnection" : "graphql.relay.SimpleListConnection<Institute>"
+            "AccountConnection"     : "graphql.relay.SimpleListConnection<Account>",
+            "FranchisorConnection"  : "graphql.relay.SimpleListConnection<Franchisor>",
+            "InstituteConnection"   : "graphql.relay.SimpleListConnection<Institute>",
+            "BadgeConnection"       : "graphql.relay.SimpleListConnection<Badge>",
+            "BudgetConnection"       : "graphql.relay.SimpleListConnection<Budget>"
     ]
 }

@@ -1,0 +1,18 @@
+extend type QueryResolver {
+    budgets(filter: BadgeFilter, first:Int, after:String): BudgetConnection
+}
+
+type Budget @connection {
+    institute: Institute
+    budgetAmount: Int
+    startDate: String
+    endDate: String
+    created_at: String
+    updated_at: String
+}
+
+input BudgetFilter {
+    instituteId: String
+    startDate: String
+    endDate: String
+}

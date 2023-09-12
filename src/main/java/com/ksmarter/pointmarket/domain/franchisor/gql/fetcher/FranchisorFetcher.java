@@ -11,6 +11,7 @@ import com.netflix.graphql.dgs.exceptions.DgsEntityNotFoundException;
 import graphql.relay.Connection;
 import graphql.relay.SimpleListConnection;
 import graphql.schema.DataFetchingEnvironment;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
@@ -23,12 +24,14 @@ public class FranchisorFetcher {
         this.franchisorRepository = franchisorRepository;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DgsData(parentType = DgsTypeConst.QueryResolver)
     public Connection<Franchisor> franchisors(DgsDataFetchingEnvironment dfe) {
         List<Franchisor> franchisors = franchisorRepository.findAll();
         return new SimpleListConnection<>(franchisors).get(dfe);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DgsData(parentType = DgsTypeConst.QueryResolver)
     public Franchisor franchisor(DataFetchingEnvironment dfe, @InputArgument("id") Long id) {
         return franchisorRepository.findById(id).orElseThrow(DgsEntityNotFoundException::new);

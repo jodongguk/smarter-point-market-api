@@ -1,0 +1,18 @@
+extend type QueryResolver {
+    badges(filter: BadgeFilter, first:Int, after:String): BadgeConnection
+}
+
+type Badge @connection {
+    badge_id: String
+    recipient: Account
+    sender: Account
+    title: String
+    description: String
+    created_at: String
+    updated_at: String
+}
+
+input BadgeFilter {
+    sender: String
+    recipient: String
+}

@@ -12,6 +12,7 @@ import com.netflix.graphql.dgs.exceptions.DgsEntityNotFoundException;
 import graphql.relay.Connection;
 import graphql.relay.SimpleListConnection;
 import graphql.schema.DataFetchingEnvironment;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
@@ -24,12 +25,14 @@ public class InstituteFetcher {
         this.instituteRepository = instituteRepository;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DgsData(parentType = DgsTypeConst.QueryResolver)
     public Connection<Institute> institutes(DataFetchingEnvironment dfe) {
         List<Institute> institutes = instituteRepository.findAll();
         return new SimpleListConnection<>(institutes).get(dfe);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DgsData(parentType = DgsTypeConst.QueryResolver)
     public Institute institute(DataFetchingEnvironment dfe, @InputArgument("id") Long id) {
         return instituteRepository.findById(id).orElseThrow(DgsEntityNotFoundException::new);
