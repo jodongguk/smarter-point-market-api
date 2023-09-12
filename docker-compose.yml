@@ -32,6 +32,7 @@ services:
       - TZ=Asia/Seoul
     networks:
       - point-market-network
+
   redis:
     container_name: point-market-redis
     hostname: redis_boot
