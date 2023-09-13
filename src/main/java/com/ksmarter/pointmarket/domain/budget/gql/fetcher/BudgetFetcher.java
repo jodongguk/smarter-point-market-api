@@ -25,7 +25,7 @@ public class BudgetFetcher {
         this.budgetRepository = budgetRepository;
     }
 
-    @PreAuthorize("hasRole('ROLE_INSTITUTE')")
+    @PreAuthorize("hasAnyRole('ROLE_INSTITUTE')")
     @DgsData(parentType = DgsTypeConst.QueryResolver)
     public Connection<Budget> budgets(DataFetchingEnvironment dfe,
                                     @InputArgument Integer first,

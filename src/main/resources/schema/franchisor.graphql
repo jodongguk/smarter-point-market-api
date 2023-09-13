@@ -5,6 +5,7 @@ extend type QueryResolver {
 
 type Franchisor @connection {
     id: ID!
+
     name: String!
     owner: String
     tel: String

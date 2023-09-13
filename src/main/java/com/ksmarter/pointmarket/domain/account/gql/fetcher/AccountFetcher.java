@@ -31,7 +31,7 @@ public class AccountFetcher {
         this.accountContextBuilder = accountContextBuilder;
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DgsData(parentType = DgsTypeConst.QueryResolver)
     public Connection<Account> accounts(DgsDataFetchingEnvironment dfe,
                                         @InputArgument AccountFilter filter,
@@ -46,7 +46,7 @@ public class AccountFetcher {
         return new SimpleListConnection<>(accounts).get(dfe);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DgsData(parentType = DgsTypeConst.QueryResolver)
     public Account account(DgsDataFetchingEnvironment dfe,
                            @InputArgument("id") Long id) {

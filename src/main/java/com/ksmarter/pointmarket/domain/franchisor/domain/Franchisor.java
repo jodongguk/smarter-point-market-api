@@ -1,9 +1,12 @@
 package com.ksmarter.pointmarket.domain.franchisor.domain;
 
+import com.ksmarter.pointmarket.domain.account.domain.Account;
 import com.ksmarter.pointmarket.domain.common.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.hibernate.annotations.Comment;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "franchisor")

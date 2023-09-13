@@ -5,6 +5,7 @@ extend type QueryResolver {
 
 type Institute @connection {
     id: ID!
+
     name: String!
     owner: String
     tel: String

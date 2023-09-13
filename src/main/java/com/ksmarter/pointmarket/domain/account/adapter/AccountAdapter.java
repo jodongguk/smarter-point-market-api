@@ -1,6 +1,7 @@
 package com.ksmarter.pointmarket.domain.account.adapter;
 
 import com.ksmarter.pointmarket.domain.account.domain.Account;
+import com.ksmarter.pointmarket.domain.account.domain.AccountAuthority;
 import com.ksmarter.pointmarket.domain.account.domain.Authority;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,7 +16,7 @@ public class AccountAdapter extends User {
     private Account account;
 
     public AccountAdapter(Account account) {
-        super(account.getUserid(), account.getPassword(), authorities(account.getAuthorities()));
+        super(account.getUserid(), account.getPassword(), authorities(account.getAuthorities().stream().map(AccountAuthority::getAuthority).collect(Collectors.toSet())));
         this.account = account;
     }
 

@@ -1,8 +1,6 @@
 package com.ksmarter.pointmarket.domain.quest.gql.fetcher;
 
 import com.ksmarter.pointmarket.constants.DgsTypeConst;
-import com.ksmarter.pointmarket.domain.badge.domain.Badge;
-import com.ksmarter.pointmarket.domain.badge.repository.BadgeRepository;
 import com.ksmarter.pointmarket.domain.quest.domain.Quest;
 import com.ksmarter.pointmarket.domain.quest.repository.QuestRepository;
 import com.ksmarter.pointmarket.generated.types.BadgeFilter;
@@ -25,7 +23,7 @@ public class QuestFetcher {
         this.questRepository = questRepository;
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @DgsData(parentType = DgsTypeConst.QueryResolver)
     public Connection<Quest> quests(DataFetchingEnvironment dfe,
                                     @InputArgument BadgeFilter filter,

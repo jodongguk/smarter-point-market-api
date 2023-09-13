@@ -1,6 +1,7 @@
 package com.ksmarter.pointmarket.domain.institute.domain;
 
 import com.ksmarter.pointmarket.domain.account.domain.Account;
+import com.ksmarter.pointmarket.domain.account.domain.AccountInstitute;
 import com.ksmarter.pointmarket.domain.common.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -49,9 +50,6 @@ public class Institute extends BaseEntity {
     @Column(name = "business_registration_number", length = 20)
     private String businessRegistrationNumber;
 
-    @ManyToMany
-    @Comment("등록 자녀")
-    @JoinTable(name = "institute_child",
-            joinColumns = {@JoinColumn(name = "institute_id", referencedColumnName = "institute_id")})
-    private Set<Account> children;
+    @OneToMany(mappedBy = "institute")
+    private Set<InstituteChildren> children;
 }

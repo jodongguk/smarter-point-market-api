@@ -3,6 +3,8 @@ extend type QueryResolver {
 }
 
 type Budget @connection {
+    id: ID!
+
     institute: Institute
     budgetAmount: Int
     startDate: String

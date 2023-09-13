@@ -4,10 +4,10 @@ extend type QueryResolver {
 
 type Badge @connection {
     id: ID!
-    recipient: Account
-    sender: Account
+
     title: String
     description: String
+    recipient: Account
 
     createdAt: String
     createdBy: String

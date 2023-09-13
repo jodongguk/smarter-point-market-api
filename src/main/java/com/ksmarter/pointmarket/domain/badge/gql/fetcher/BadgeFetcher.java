@@ -23,7 +23,7 @@ public class BadgeFetcher {
         this.badgeRepository = badgeRepository;
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @DgsData(parentType = DgsTypeConst.QueryResolver)
     public Connection<Badge> badges(DataFetchingEnvironment dfe,
                                     @InputArgument BadgeFilter filter,

@@ -73,10 +73,4 @@ public class LoginService {
                 .build();
     }
 
-    @Transactional
-    public void invalidateRefreshTokenByUserid(String userid) {
-        Account account = accountRepository.findOneWithAuthoritiesByUserid(userid)
-                .orElseThrow(() -> new UsernameNotFoundException(userid + "-> 찾을 수 없습니다"));
-        account.increaseTokenWeight();
-    }
 }

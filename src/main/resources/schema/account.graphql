@@ -4,7 +4,8 @@ extend type QueryResolver {
 }
 
 type Account @connection {
-    id: ID
+    id: ID!
+
     userid: String
     name: String
     activated: Boolean

@@ -1,10 +1,7 @@
 package com.ksmarter.pointmarket.domain.account.domain;
 
 import com.ksmarter.pointmarket.domain.common.domain.BaseEntity;
-import com.ksmarter.pointmarket.domain.franchisor.domain.Franchisor;
-import com.ksmarter.pointmarket.domain.institute.domain.Institute;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
@@ -43,42 +40,15 @@ public class Account extends BaseEntity {
     @Column(name = "activated")
     private boolean activated;
 
-    @ManyToMany
-    @Comment("사용자 권한 맵핑")
-    @JoinTable(name = "account_authority",
-            joinColumns = {@JoinColumn(name = "account_id", referencedColumnName = "account_id")},
-            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
-    private Set<Authority> authorities;
+    @OneToMany(mappedBy = "account")
+    private Set<AccountAuthority> authorities;
 
-    @ManyToMany
-    @Comment("사용자 자녀")
-    @JoinTable(name = "account_child",
-            joinColumns = {@JoinColumn(name = "account_id", referencedColumnName = "account_id")})
-    private Set<Account> children;
-    
-    @ManyToMany
-    @Comment("사용자 학원 정보")
-    @JoinTable(name = "account_institute",
-            joinColumns = {@JoinColumn(name = "account_id", referencedColumnName = "account_id")})
-    private Set<Institute> institutes;
-    
-    @ManyToMany
-    @Comment("사용자 가맹점 정보")
-    @JoinTable(name = "account_franchisor",
-            joinColumns = {@JoinColumn(name = "account_id", referencedColumnName = "account_id")})
-    private Set<Franchisor> franchisors;
+    @OneToMany(mappedBy = "account")
+    private Set<AccountChildren> childrens;
 
-    @Builder
-    public Account(String userid, String password, String name, Set<Authority> authorities, boolean activated) {
-        this.userid = userid;
-        this.password = password;
-        this.name = name;
-        this.authorities = authorities;
-        this.activated = activated;
-        this.tokenWeight = 1L; // 초기 가중치는 1
-    }
+    @OneToMany(mappedBy = "account")
+    private Set<AccountInstitute> institutes;
 
-    public void increaseTokenWeight() {
-        this.tokenWeight++;
-    }
+    @OneToMany(mappedBy = "account")
+    private Set<AccountFranchisor> franchisors;
 }
