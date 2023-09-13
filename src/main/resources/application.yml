@@ -53,6 +53,13 @@ dgs:
       title: "SMARTER-POINTMARKET GraphiQL"
       path: "/graphiql"
 
+graphql:
+  voyager:
+    enabled: true
+    basePath: /
+    mapping: /voyager
+    endpoint: /graphql
+
 logging:
   level:
     root: info

@@ -33,11 +33,6 @@ public class Badge extends BaseEntity {
     @JoinColumn(name = "institute_id", nullable = true)
     private Institute institute;
 
-    @Comment("배지 수여자")
-    @ManyToOne
-    @JoinColumn(name = "sender")
-    private Account sender;
-
     @Comment("배지 취득자")
     @ManyToOne
     @JoinColumn(name = "recipient")

@@ -1,3 +1,5 @@
+directive @connection on OBJECT
+
 type QueryResolver {
     service: String
 }

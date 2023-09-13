@@ -15,6 +15,7 @@ java {
 ext {
     dgsVersion = '7.5.1'
     springBootVersion = '3.1.3'
+    jsonwebtokenVersion = '0.11.5'
 }
 
 configurations {
@@ -48,13 +49,13 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-redis:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-cache:${springBootVersion}"
 
-
     implementation "org.flywaydb:flyway-core"
     implementation "org.postgresql:postgresql:42.6.0"
 
-    implementation "io.jsonwebtoken:jjwt-api:0.11.5"
-    runtimeOnly "io.jsonwebtoken:jjwt-impl:0.11.5"
-    runtimeOnly "io.jsonwebtoken:jjwt-jackson:0.11.5"
+    implementation "io.jsonwebtoken:jjwt-api:${jsonwebtokenVersion}"
+    runtimeOnly "io.jsonwebtoken:jjwt-impl:${jsonwebtokenVersion}"
+    runtimeOnly "io.jsonwebtoken:jjwt-jackson:${jsonwebtokenVersion}"
+
     compileOnly "org.projectlombok:lombok"
 
     developmentOnly "org.springframework.boot:spring-boot-devtools"
@@ -81,6 +82,7 @@ generateJava {
             "FranchisorConnection"  : "graphql.relay.SimpleListConnection<Franchisor>",
             "InstituteConnection"   : "graphql.relay.SimpleListConnection<Institute>",
             "BadgeConnection"       : "graphql.relay.SimpleListConnection<Badge>",
-            "BudgetConnection"       : "graphql.relay.SimpleListConnection<Budget>"
+            "BudgetConnection"       : "graphql.relay.SimpleListConnection<Budget>",
+            "QuestConnection"       : "graphql.relay.SimpleListConnection<Quest>"
     ]
 }

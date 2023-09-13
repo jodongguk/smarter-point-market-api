@@ -1,0 +1,21 @@
+extend type QueryResolver {
+    quests(filter: QuestFilter, first:Int, after:String): QuestConnection
+}
+
+type Quest @connection {
+    id: ID!
+
+    institute: Institute
+    questRewardCredit: Int
+    questStartDate: String
+    questEndDate: String
+
+    createdAt: String
+    createdBy: String
+    updatedAt: String
+    updatedBy: String
+}
+
+input QuestFilter {
+    id: String
+}

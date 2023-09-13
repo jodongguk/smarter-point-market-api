@@ -3,16 +3,18 @@ extend type QueryResolver {
 }
 
 type Badge @connection {
-    badge_id: String
+    id: ID!
     recipient: Account
     sender: Account
     title: String
     description: String
-    created_at: String
-    updated_at: String
+
+    createdAt: String
+    createdBy: String
+    updatedAt: String
+    updatedBy: String
 }
 
 input BadgeFilter {
-    sender: String
-    recipient: String
+    id: ID
 }

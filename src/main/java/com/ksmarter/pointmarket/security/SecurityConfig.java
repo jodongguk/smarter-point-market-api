@@ -79,6 +79,7 @@ public class SecurityConfig {
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers(
+                                "/favicon.ico",
                                 "/graphql/**",
                                 "/graphiql/**"
                         )

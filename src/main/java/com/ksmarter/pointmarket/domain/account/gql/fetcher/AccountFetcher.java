@@ -14,13 +14,10 @@ import com.netflix.graphql.dgs.exceptions.DgsEntityNotFoundException;
 import graphql.relay.Connection;
 import graphql.relay.SimpleListConnection;
 import lombok.extern.slf4j.Slf4j;
-import org.dataloader.DataLoader;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @DgsComponent
