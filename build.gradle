@@ -82,7 +82,7 @@ generateJava {
             "FranchisorConnection"  : "graphql.relay.SimpleListConnection<Franchisor>",
             "InstituteConnection"   : "graphql.relay.SimpleListConnection<Institute>",
             "BadgeConnection"       : "graphql.relay.SimpleListConnection<Badge>",
-            "BudgetConnection"       : "graphql.relay.SimpleListConnection<Budget>",
+            "BudgetConnection"      : "graphql.relay.SimpleListConnection<Budget>",
             "QuestConnection"       : "graphql.relay.SimpleListConnection<Quest>"
     ]
 }
