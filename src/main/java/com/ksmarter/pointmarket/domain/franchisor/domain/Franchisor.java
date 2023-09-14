@@ -1,6 +1,8 @@
 package com.ksmarter.pointmarket.domain.franchisor.domain;
 
 import com.ksmarter.pointmarket.domain.account.domain.Account;
+import com.ksmarter.pointmarket.domain.account.domain.AccountFranchisor;
+import com.ksmarter.pointmarket.domain.account.domain.AccountInstitute;
 import com.ksmarter.pointmarket.domain.common.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -46,4 +48,7 @@ public class Franchisor extends BaseEntity {
     @Comment("사업자등록 번호")
     @Column(name = "business_registration_number", length = 20)
     private String businessRegistrationNumber;
+
+    @OneToMany(mappedBy = "franchisor")
+    private Set<AccountFranchisor> accounts;
 }

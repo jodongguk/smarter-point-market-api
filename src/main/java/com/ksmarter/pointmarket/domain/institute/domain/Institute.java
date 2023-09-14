@@ -51,5 +51,8 @@ public class Institute extends BaseEntity {
     private String businessRegistrationNumber;
 
     @OneToMany(mappedBy = "institute")
+    private Set<AccountInstitute> accounts;
+
+    @OneToMany(mappedBy = "institute")
     private Set<InstituteChildren> children;
 }

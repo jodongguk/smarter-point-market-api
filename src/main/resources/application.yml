@@ -13,24 +13,19 @@ spring:
     password: postgres
 
   flyway:
-    enabled: false
-    baselineOnMigrate: true
-    locations: classpath:db/migration/{vendor},classpath:db/seed/local
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration/postgres,classpath:db/seed/local
 
   jpa:
     show-sql: true
-    generate-ddl: true
+    generate-ddl: false
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
     properties:
       hibernate:
         format_sql: true
-        envers:
-          track_entities_changed_in_revision: true
-          audit_table_suffix: _history
-          revision_field_name: revision_id
-          revision_type_field_name: revision_type
-    defer-datasource-initialization: true
+    defer-datasource-initialization: false
 
 jwt:
   header: Authorization
@@ -63,6 +58,8 @@ graphql:
 logging:
   level:
     root: info
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
     com:
       ksmarter:
         pointmarket: debug

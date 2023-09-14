@@ -1,6 +1,7 @@
 package com.ksmarter.pointmarket.domain.account.domain;
 
 import com.ksmarter.pointmarket.domain.common.domain.BaseEntity;
+import com.ksmarter.pointmarket.domain.institute.domain.InstituteChildren;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,7 +44,7 @@ public class Account extends BaseEntity {
     @OneToMany(mappedBy = "account")
     private Set<AccountAuthority> authorities;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "children")
     private Set<AccountChildren> childrens;
 
     @OneToMany(mappedBy = "account")
@@ -51,4 +52,9 @@ public class Account extends BaseEntity {
 
     @OneToMany(mappedBy = "account")
     private Set<AccountFranchisor> franchisors;
+
+    @OneToMany(mappedBy = "children")
+    private Set<InstituteChildren> attendInstitutes;
+
+
 }

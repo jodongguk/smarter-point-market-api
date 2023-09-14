@@ -22,9 +22,9 @@ public class AccountChildren extends BaseEntity {
     private AccountChildrenId id = new AccountChildrenId();
 
     @ManyToOne
-    @JoinColumn(name = "account_id")
-    @MapsId("accountId")
-    private Account account;
+    @JoinColumn(name = "parent_id")
+    @MapsId("parentId")
+    private Account parent;
 
     @ManyToOne
     @JoinColumn(name = "children_id")
@@ -37,7 +37,7 @@ public class AccountChildren extends BaseEntity {
     @AllArgsConstructor
     @EqualsAndHashCode
     public static class AccountChildrenId implements Serializable {
-        private Long accountId;
+        private Long parentId;
         private Long childrenId;
     }
 }

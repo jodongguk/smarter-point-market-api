@@ -14,6 +14,7 @@ type Institute @connection {
     addr2: String
     businessRegistrationNumber: String
 
+    accounts: [Account]
     children: [Account]
 }
 

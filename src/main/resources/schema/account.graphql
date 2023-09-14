@@ -14,6 +14,7 @@ type Account @connection {
     children: [Account]
     institutes: [Institute]
     franchisors: [Franchisor]
+    attendInstitutes: [Account]
 }
 
 input AccountFilter {

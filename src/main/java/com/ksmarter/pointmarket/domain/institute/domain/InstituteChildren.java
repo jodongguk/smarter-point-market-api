@@ -27,9 +27,9 @@ public class InstituteChildren extends BaseEntity {
     private Institute institute;
 
     @ManyToOne
-    @JoinColumn(name = "account_id")
-    @MapsId("accountId")
-    private Account account;
+    @JoinColumn(name = "children_id")
+    @MapsId("childrenId")
+    private Account children;
 
     @Embeddable
     @Getter
