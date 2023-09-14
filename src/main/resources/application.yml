@@ -13,19 +13,19 @@ spring:
     password: postgres
 
   flyway:
-    enabled: true
+    enabled: false
     baseline-on-migrate: true
     locations: classpath:db/migration/postgres,classpath:db/seed/local
 
   jpa:
     show-sql: true
-    generate-ddl: false
+    generate-ddl: true
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create-drop
     properties:
       hibernate:
         format_sql: true
-    defer-datasource-initialization: false
+    defer-datasource-initialization: true
 
 jwt:
   header: Authorization

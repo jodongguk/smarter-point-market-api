@@ -1,6 +1,6 @@
 package com.ksmarter.pointmarket.domain.account.gql.fetcher;
 
-import com.ksmarter.pointmarket.constants.DgsTypeConst;
+
 import com.ksmarter.pointmarket.domain.account.domain.Authority;
 import com.ksmarter.pointmarket.domain.account.gql.context.AccountContextBuilder;
 import com.ksmarter.pointmarket.domain.account.domain.Account;
@@ -43,7 +43,7 @@ public class AccountFetcher {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @DgsData(parentType = DgsTypeConst.QueryResolver)
+    @DgsData(parentType = DgsConstants.QUERYRESOLVER.TYPE_NAME)
     public Connection<Account> accounts(DgsDataFetchingEnvironment dfe,
                                         @InputArgument AccountFilter filter,
                                         @InputArgument Integer first,
@@ -55,7 +55,7 @@ public class AccountFetcher {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @DgsData(parentType = DgsTypeConst.QueryResolver)
+    @DgsData(parentType = DgsConstants.QUERYRESOLVER.TYPE_NAME)
     public Account account(DgsDataFetchingEnvironment dfe,
                            @InputArgument("id") Long id) {
         return accountRepository.findById(id).orElseThrow(DgsEntityNotFoundException::new);

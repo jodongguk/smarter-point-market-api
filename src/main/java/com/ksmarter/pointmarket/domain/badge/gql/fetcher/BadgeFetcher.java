@@ -1,8 +1,9 @@
 package com.ksmarter.pointmarket.domain.badge.gql.fetcher;
 
-import com.ksmarter.pointmarket.constants.DgsTypeConst;
+
 import com.ksmarter.pointmarket.domain.badge.domain.Badge;
 import com.ksmarter.pointmarket.domain.badge.repository.BadgeRepository;
+import com.ksmarter.pointmarket.generated.DgsConstants;
 import com.ksmarter.pointmarket.generated.types.BadgeFilter;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsData;
@@ -24,7 +25,7 @@ public class BadgeFetcher {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
-    @DgsData(parentType = DgsTypeConst.QueryResolver)
+    @DgsData(parentType = DgsConstants.QUERYRESOLVER.TYPE_NAME)
     public Connection<Badge> badges(DataFetchingEnvironment dfe,
                                     @InputArgument BadgeFilter filter,
                                     @InputArgument Integer first,

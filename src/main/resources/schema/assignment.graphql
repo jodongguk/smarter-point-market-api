@@ -1,0 +1,21 @@
+extend type QueryResolver {
+    assignments(filter: AssignmentFilter, first:Int, after:String): AssignmentConnection
+}
+
+type Assignment @connection {
+    id: ID!
+
+    institute: Institute
+    rewardCredit: Int
+    startDate: String
+    endDate: String
+
+    createdAt: String
+    createdBy: String
+    updatedAt: String
+    updatedBy: String
+}
+
+input AssignmentFilter {
+    id: ID
+}

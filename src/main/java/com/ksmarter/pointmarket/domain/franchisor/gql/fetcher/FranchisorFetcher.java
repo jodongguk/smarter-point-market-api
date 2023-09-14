@@ -1,6 +1,6 @@
 package com.ksmarter.pointmarket.domain.franchisor.gql.fetcher;
 
-import com.ksmarter.pointmarket.constants.DgsTypeConst;
+
 import com.ksmarter.pointmarket.domain.account.domain.Account;
 import com.ksmarter.pointmarket.domain.account.repository.AccountRepository;
 import com.ksmarter.pointmarket.domain.franchisor.domain.Franchisor;
@@ -31,14 +31,14 @@ public class FranchisorFetcher {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_FRANCHISOR')")
-    @DgsData(parentType = DgsTypeConst.QueryResolver)
+    @DgsData(parentType = DgsConstants.QUERYRESOLVER.TYPE_NAME)
     public Connection<Franchisor> franchisors(DgsDataFetchingEnvironment dfe) {
         List<Franchisor> franchisors = franchisorRepository.findAll();
         return new SimpleListConnection<>(franchisors).get(dfe);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_FRANCHISOR')")
-    @DgsData(parentType = DgsTypeConst.QueryResolver)
+    @DgsData(parentType = DgsConstants.QUERYRESOLVER.TYPE_NAME)
     public Franchisor franchisor(DataFetchingEnvironment dfe, @InputArgument("id") Long id) {
         return franchisorRepository.findById(id).orElseThrow(DgsEntityNotFoundException::new);
     }

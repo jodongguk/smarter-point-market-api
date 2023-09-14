@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -30,12 +31,21 @@ public class Account extends BaseEntity {
     @Column(name = "password", length = 100)
     private String password;
 
-    @Column(name = "token_weight")
-    private Long tokenWeight;
-
     @Comment("사용자 이름")
     @Column(name = "name", length = 50)
     private String name;
+
+    @Comment("사용자 연락처")
+    @Column(name = "phone_number", length = 20)
+    private String phoneNumber;
+
+    @Comment("사용자 생년월일")
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
+
+    @Comment("사용자 토큰 가중")
+    @Column(name = "token_weight")
+    private Long tokenWeight;
 
     @Comment("사용자 활성 유무")
     @Column(name = "activated")

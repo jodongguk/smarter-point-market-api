@@ -1,6 +1,6 @@
 package com.ksmarter.pointmarket.domain.institute.gql.fetcher;
 
-import com.ksmarter.pointmarket.constants.DgsTypeConst;
+
 import com.ksmarter.pointmarket.domain.account.domain.Account;
 import com.ksmarter.pointmarket.domain.account.repository.AccountRepository;
 import com.ksmarter.pointmarket.domain.franchisor.domain.Franchisor;
@@ -31,14 +31,14 @@ public class InstituteFetcher {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_INSTITUTE')")
-    @DgsData(parentType = DgsTypeConst.QueryResolver)
+    @DgsData(parentType = DgsConstants.QUERYRESOLVER.TYPE_NAME)
     public Connection<Institute> institutes(DataFetchingEnvironment dfe) {
         List<Institute> institutes = instituteRepository.findAll();
         return new SimpleListConnection<>(institutes).get(dfe);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_INSTITUTE')")
-    @DgsData(parentType = DgsTypeConst.QueryResolver)
+    @DgsData(parentType = DgsConstants.QUERYRESOLVER.TYPE_NAME)
     public Institute institute(DataFetchingEnvironment dfe, @InputArgument("id") Long id) {
         return instituteRepository.findById(id).orElseThrow(DgsEntityNotFoundException::new);
     }
