@@ -1,12 +1,9 @@
 package com.ksmarter.pointmarket.domain.budget.gql.fetcher;
 
 
-import com.ksmarter.pointmarket.domain.badge.domain.Badge;
-import com.ksmarter.pointmarket.domain.badge.repository.BadgeRepository;
 import com.ksmarter.pointmarket.domain.budget.domain.Budget;
 import com.ksmarter.pointmarket.domain.budget.repository.BudgetRepository;
 import com.ksmarter.pointmarket.generated.DgsConstants;
-import com.ksmarter.pointmarket.generated.types.BadgeFilter;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsData;
 import com.netflix.graphql.dgs.InputArgument;
@@ -18,11 +15,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import java.util.List;
 
 @DgsComponent
-public class BudgetFetcher {
+public class BudgetQueryFetcher {
 
     private final BudgetRepository budgetRepository;
 
-    public BudgetFetcher(BudgetRepository budgetRepository) {
+    public BudgetQueryFetcher(BudgetRepository budgetRepository) {
         this.budgetRepository = budgetRepository;
     }
 

@@ -16,11 +16,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import java.util.List;
 
 @DgsComponent
-public class BadgeFetcher {
+public class BadgeQueryFetcher {
 
     private final BadgeRepository badgeRepository;
 
-    public BadgeFetcher(BadgeRepository badgeRepository) {
+    public BadgeQueryFetcher(BadgeRepository badgeRepository) {
         this.badgeRepository = badgeRepository;
     }
 

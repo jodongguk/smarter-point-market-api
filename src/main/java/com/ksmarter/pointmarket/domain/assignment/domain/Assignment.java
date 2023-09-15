@@ -8,6 +8,7 @@ import org.hibernate.annotations.Comment;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "assignment")
@@ -36,5 +37,8 @@ public class Assignment extends BaseEntity {
     @Comment("과제 수행 금액")
     @Column(name = "reward_credit", nullable = false)
     private BigDecimal rewardCredit = BigDecimal.ZERO;
+
+    @OneToMany(mappedBy = "assignment")
+    private Set<AssignmentSubmit> assignmentSubmits;
     
 }

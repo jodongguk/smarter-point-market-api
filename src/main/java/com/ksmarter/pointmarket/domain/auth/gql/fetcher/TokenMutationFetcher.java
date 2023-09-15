@@ -12,11 +12,11 @@ import jakarta.annotation.security.PermitAll;
 import org.springframework.web.context.request.ServletWebRequest;
 
 @DgsComponent
-public class TokenFetcher {
+public class TokenMutationFetcher {
 
     private final LoginService loginService;
 
-    public TokenFetcher(LoginService loginService) {
+    public TokenMutationFetcher(LoginService loginService) {
         this.loginService = loginService;
     }
 
@@ -37,6 +37,7 @@ public class TokenFetcher {
     @DgsData(parentType = "MutationResolver")
     public ResponseLogin.Token refresh(DgsDataFetchingEnvironment dfe,
                                        @InputArgument String refreshToken) {
+
         ResponseLogin.Token token = loginService.refreshToken(refreshToken);
 
         this.setAuthorizationToken(dfe, token);

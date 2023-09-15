@@ -20,12 +20,12 @@ import java.util.List;
 import java.util.Set;
 
 @DgsComponent
-public class FranchisorFetcher {
+public class FranchisorQueryFetcher {
 
     private final AccountRepository accountRepository;
     private final FranchisorRepository franchisorRepository;
 
-    public FranchisorFetcher(AccountRepository accountRepository, FranchisorRepository franchisorRepository) {
+    public FranchisorQueryFetcher(AccountRepository accountRepository, FranchisorRepository franchisorRepository) {
         this.accountRepository = accountRepository;
         this.franchisorRepository = franchisorRepository;
     }

@@ -9,11 +9,6 @@ type Budget @connection {
     budgetAmount: Int
     startDate: String
     endDate: String
-
-    createdAt: String
-    createdBy: String
-    updatedAt: String
-    updatedBy: String
 }
 
 input BudgetFilter {

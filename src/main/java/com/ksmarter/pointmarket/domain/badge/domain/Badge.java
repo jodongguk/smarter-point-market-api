@@ -2,6 +2,10 @@ package com.ksmarter.pointmarket.domain.badge.domain;
 
 import com.ksmarter.pointmarket.domain.account.domain.Account;
 import com.ksmarter.pointmarket.domain.common.domain.BaseEntity;
+import com.ksmarter.pointmarket.domain.common.enums.AssignmentSubmitTypes;
+import com.ksmarter.pointmarket.domain.common.enums.BadgeTypes;
+import com.ksmarter.pointmarket.domain.common.enums.converter.AssignmentSubmitTypesConverter;
+import com.ksmarter.pointmarket.domain.common.enums.converter.BadgeTypesConverter;
 import com.ksmarter.pointmarket.domain.institute.domain.Institute;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -18,6 +22,11 @@ public class Badge extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "badge_id", nullable = false)
     private Long id;
+
+    @Comment("배지 코드")
+    @Column(name = "badge_type", nullable = false, length = 20)
+    @Convert(converter = BadgeTypesConverter.class)
+    private BadgeTypes assignmentSubmitType = BadgeTypes.COMPLIMENT;
 
     @Comment("배지 제목")
     @Column(name = "title", nullable = false)

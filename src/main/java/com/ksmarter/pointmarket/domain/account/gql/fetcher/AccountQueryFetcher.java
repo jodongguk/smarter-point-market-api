@@ -27,14 +27,14 @@ import java.util.Set;
 
 @Slf4j
 @DgsComponent
-public class AccountFetcher {
+public class AccountQueryFetcher {
     private final AccountContextBuilder accountContextBuilder;
     private final AccountRepository accountRepository;
     private final AuthorityRepository authorityRepository;
     private final FranchisorRepository franchisorRepository;
     private final InstituteRepository instituteRepository;
 
-    public AccountFetcher(AccountRepository accountRepository, AuthorityRepository authorityRepository, AccountContextBuilder accountContextBuilder, FranchisorRepository franchisorRepository, InstituteRepository instituteRepository) {
+    public AccountQueryFetcher(AccountRepository accountRepository, AuthorityRepository authorityRepository, AccountContextBuilder accountContextBuilder, FranchisorRepository franchisorRepository, InstituteRepository instituteRepository) {
         this.accountRepository = accountRepository;
         this.authorityRepository = authorityRepository;
         this.accountContextBuilder = accountContextBuilder;

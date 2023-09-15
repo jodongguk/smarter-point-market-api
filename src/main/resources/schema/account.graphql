@@ -8,13 +8,15 @@ type Account @connection {
 
     userid: String
     name: String
-    activated: Boolean
+    birthDate: String
+    phoneNumber: String
 
     authorities: [Authority]
     children: [Account]
     institutes: [Institute]
     franchisors: [Franchisor]
     attendInstitutes: [Account]
+    credit: Credit
 }
 
 input AccountFilter {

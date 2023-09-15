@@ -1,6 +1,8 @@
 package com.ksmarter.pointmarket.domain.account.service;
 
+import com.ksmarter.pointmarket.domain.account.domain.Account;
 import com.ksmarter.pointmarket.domain.account.repository.AccountRepository;
+import graphql.GraphQLException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,12 +13,7 @@ public class AccountJoinService {
     public AccountJoinService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
-
-    /*public UserDetails join(AccountRequest.Join dto) {
-
-
-
-        Account account = accountRepository.save(accountInput);
-        return new AccountAdapter(account);
-    }*/
+    public Account getUserByUserId(String userid) throws Exception{
+        return accountRepository.findOneWithAuthoritiesByUserid(userid).orElseThrow(GraphQLException::new);
+    }
 }

@@ -4,15 +4,9 @@ extend type QueryResolver {
 
 type Badge @connection {
     id: ID!
-
     title: String
     description: String
     recipient: Account
-
-    createdAt: String
-    createdBy: String
-    updatedAt: String
-    updatedBy: String
 }
 
 input BadgeFilter {

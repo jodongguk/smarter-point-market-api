@@ -3,7 +3,6 @@ package com.ksmarter.pointmarket.domain.institute.gql.fetcher;
 
 import com.ksmarter.pointmarket.domain.account.domain.Account;
 import com.ksmarter.pointmarket.domain.account.repository.AccountRepository;
-import com.ksmarter.pointmarket.domain.franchisor.domain.Franchisor;
 import com.ksmarter.pointmarket.domain.institute.domain.Institute;
 import com.ksmarter.pointmarket.domain.institute.repository.InstituteRepository;
 import com.ksmarter.pointmarket.generated.DgsConstants;
@@ -20,12 +19,12 @@ import java.util.List;
 import java.util.Set;
 
 @DgsComponent
-public class InstituteFetcher {
+public class InstituteQueryFetcher {
 
     private final AccountRepository accountRepository;
     private final InstituteRepository instituteRepository;
 
-    public InstituteFetcher(AccountRepository accountRepository, InstituteRepository instituteRepository) {
+    public InstituteQueryFetcher(AccountRepository accountRepository, InstituteRepository instituteRepository) {
         this.accountRepository = accountRepository;
         this.instituteRepository = instituteRepository;
     }

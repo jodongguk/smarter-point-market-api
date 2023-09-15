@@ -1,0 +1,23 @@
+extend type QueryResolver {
+    userMe: Account
+}
+extend type MutationResolver {
+    login(userid: String!, password: String!): Token
+    refresh(refreshToken: String!): Token
+
+    join(inputJoinAccount: InputJoinAccount): Boolean
+}
+
+type Token {
+    accessToken: String!
+    refreshToken: String!
+}
+
+input InputJoinAccount {
+    userid: String
+    password: String
+
+    name: String
+    phoneNumber: String
+    birthDate: String
+}

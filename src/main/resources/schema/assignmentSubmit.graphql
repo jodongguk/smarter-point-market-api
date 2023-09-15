@@ -1,0 +1,14 @@
+extend type QueryResolver {
+    assignmentSubmits(filter: AssignmentSubmitFilter, first:Int, after:String): AssignmentSubmit
+}
+
+type AssignmentSubmit @connection {
+    id: ID!
+    institute: Institute
+    assignmentSubmitType: String
+    comment: String
+}
+
+input AssignmentSubmitFilter {
+    id: ID
+}

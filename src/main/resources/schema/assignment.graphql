@@ -4,16 +4,10 @@ extend type QueryResolver {
 
 type Assignment @connection {
     id: ID!
-
     institute: Institute
     rewardCredit: Int
     startDate: String
     endDate: String
-
-    createdAt: String
-    createdBy: String
-    updatedAt: String
-    updatedBy: String
 }
 
 input AssignmentFilter {

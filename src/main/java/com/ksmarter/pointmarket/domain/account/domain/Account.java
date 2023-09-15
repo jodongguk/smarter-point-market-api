@@ -1,6 +1,7 @@
 package com.ksmarter.pointmarket.domain.account.domain;
 
 import com.ksmarter.pointmarket.domain.common.domain.BaseEntity;
+import com.ksmarter.pointmarket.domain.credit.domain.Credit;
 import com.ksmarter.pointmarket.domain.institute.domain.InstituteChildren;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -52,19 +54,20 @@ public class Account extends BaseEntity {
     private boolean activated;
 
     @OneToMany(mappedBy = "account")
-    private Set<AccountAuthority> authorities;
+    private Set<AccountAuthority> authorities = new HashSet<>();
 
     @OneToMany(mappedBy = "children")
-    private Set<AccountChildren> childrens;
+    private Set<AccountChildren> childrens = new HashSet<>();;
 
     @OneToMany(mappedBy = "account")
-    private Set<AccountInstitute> institutes;
+    private Set<AccountInstitute> institutes = new HashSet<>();;
 
     @OneToMany(mappedBy = "account")
-    private Set<AccountFranchisor> franchisors;
+    private Set<AccountFranchisor> franchisors = new HashSet<>();;
 
     @OneToMany(mappedBy = "children")
-    private Set<InstituteChildren> attendInstitutes;
+    private Set<InstituteChildren> attendInstitutes = new HashSet<>();;
 
-
+    @OneToOne(mappedBy = "account")
+    private Credit credit;
 }

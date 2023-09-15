@@ -1,0 +1,8 @@
+extend type QueryResolver {
+    credit(id: ID): Credit
+}
+
+type Credit {
+    account: Account
+    balance: Float
+}
