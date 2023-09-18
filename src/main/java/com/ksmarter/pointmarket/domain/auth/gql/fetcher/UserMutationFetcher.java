@@ -1,5 +1,6 @@
 package com.ksmarter.pointmarket.domain.auth.gql.fetcher;
 
+import com.ksmarter.pointmarket.domain.account.domain.Account;
 import com.ksmarter.pointmarket.domain.auth.service.UserService;
 import com.ksmarter.pointmarket.generated.DgsConstants;
 import com.ksmarter.pointmarket.generated.types.InputJoinAccount;
@@ -20,10 +21,10 @@ public class UserMutationFetcher {
 
     @PermitAll
     @DgsData(parentType = DgsConstants.MUTATIONRESOLVER.TYPE_NAME, field = DgsConstants.MUTATIONRESOLVER.Join)
-    public boolean join(DgsDataFetchingEnvironment dfe, @InputArgument InputJoinAccount inputJoinAccount) {
+    public Account join(DgsDataFetchingEnvironment dfe, @InputArgument InputJoinAccount inputJoinAccount) {
 
-        userService.joinByInputJoinAccount(inputJoinAccount);
+        Account account = userService.joinByInputJoinAccount(inputJoinAccount);
 
-        return true;
+        return account;
     }
 }

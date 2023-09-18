@@ -4,6 +4,7 @@ import com.ksmarter.pointmarket.domain.common.domain.BaseEntity;
 import com.ksmarter.pointmarket.domain.credit.domain.Credit;
 import com.ksmarter.pointmarket.domain.institute.domain.InstituteChildren;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
@@ -53,21 +54,43 @@ public class Account extends BaseEntity {
     @Column(name = "activated")
     private boolean activated;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     private Set<AccountAuthority> authorities = new HashSet<>();
 
-    @OneToMany(mappedBy = "children")
-    private Set<AccountChildren> childrens = new HashSet<>();;
+    @OneToMany(mappedBy = "children", cascade = CascadeType.ALL)
+    private Set<AccountChildren> childrens = new HashSet<>();
 
-    @OneToMany(mappedBy = "account")
-    private Set<AccountInstitute> institutes = new HashSet<>();;
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private Set<AccountInstitute> institutes = new HashSet<>();
 
-    @OneToMany(mappedBy = "account")
-    private Set<AccountFranchisor> franchisors = new HashSet<>();;
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private Set<AccountFranchisor> franchisors = new HashSet<>();
 
-    @OneToMany(mappedBy = "children")
-    private Set<InstituteChildren> attendInstitutes = new HashSet<>();;
+    @OneToMany(mappedBy = "children", cascade = CascadeType.ALL)
+    private Set<InstituteChildren> attendInstitutes = new HashSet<>();
 
-    @OneToOne(mappedBy = "account")
-    private Credit credit;
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
+    private Credit credit = new Credit();
+
+    @Builder
+    public Account(String userid, String password, String name, String phoneNumber, LocalDate birthDate, boolean activated, Set<AccountAuthority> authorities, Set<AccountChildren> childrens, Set<AccountInstitute> institutes, Set<AccountFranchisor> franchisors, Set<InstituteChildren> attendInstitutes, Credit credit) {
+        this.userid = userid;
+        this.password = password;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.birthDate = birthDate;
+        this.authorities = authorities;
+        this.childrens = childrens;
+        this.institutes = institutes;
+        this.franchisors = franchisors;
+        this.attendInstitutes = attendInstitutes;
+        this.credit = credit;
+        this.activated = activated;
+    }
+
+    public void addAuthorities(Set<AccountAuthority> authorities) {
+        this.authorities = authorities;
+        authorities.forEach(accountAuthority -> accountAuthority.setAccount(this));
+    }
+
 }

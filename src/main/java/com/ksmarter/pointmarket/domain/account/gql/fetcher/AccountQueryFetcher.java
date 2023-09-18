@@ -65,7 +65,7 @@ public class AccountQueryFetcher {
     @DgsData(parentType = DgsConstants.ACCOUNT.TYPE_NAME, field = DgsConstants.ACCOUNT.Authorities)
     public Set<Authority> authorities(DgsDataFetchingEnvironment dfe) {
         Account account = dfe.getSource();
-        return authorityRepository.findByAuthority_Id_AccountId(account.getId());
+        return authorityRepository.findByAccountAuthorities_Account_Id(account.getId());
     }
 
     @PreAuthorize("hasAnyRole('ROLE_PARENT')")

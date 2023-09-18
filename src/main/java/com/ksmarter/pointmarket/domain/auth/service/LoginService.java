@@ -61,10 +61,6 @@ public class LoginService {
         Account account = accountRepository.findOneWithAuthoritiesByUserid(authentication.getName())
                 .orElseThrow(() -> new UsernameNotFoundException(authentication.getName() + "을 찾을 수 없습니다"));
 
-        if (account.getTokenWeight() > refreshTokenProvider.getTokenWeight(refreshToken)) {
-            throw new InvalidRefreshTokenException();
-        }
-
         String accessToken = tokenProvider.createToken(authentication);
 
         return ResponseLogin.Token.builder()

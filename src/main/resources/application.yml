@@ -22,11 +22,15 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: create-drop
+
+    defer-datasource-initialization: true
+
     properties:
       hibernate:
         format_sql: true
-    defer-datasource-initialization: true
 
+  graphql:
+    allow-credentials: true
 jwt:
   header: Authorization
   secret: aGVsbG8gd29ybGQgbXkgbmFtZSBpcyBzc29uZyBoYWhhaGFoYWhhaGFoYSBydXJ1cnVydXJ1cnVydXJ1ZHNmc2Rmc2Rmc2Rmc2EK # fill in base64 [command: echo {plain_text} | base64]

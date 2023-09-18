@@ -17,6 +17,7 @@ public class AccountAuthority extends BaseEntity {
     @EmbeddedId
     private AccountAuthorityId id = new AccountAuthorityId();
 
+    @Setter
     @ManyToOne
     @JoinColumn(name = "account_id")
     @MapsId("accountId")
@@ -26,6 +27,12 @@ public class AccountAuthority extends BaseEntity {
     @JoinColumn(name = "authority_name")
     @MapsId("authorityName")
     private Authority authority;
+
+    @Builder
+    public AccountAuthority(Account account, Authority authority) {
+        this.account = account;
+        this.authority = authority;
+    }
 
     @Embeddable
     @Getter

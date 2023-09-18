@@ -5,7 +5,7 @@ extend type MutationResolver {
     login(userid: String!, password: String!): Token
     refresh(refreshToken: String!): Token
 
-    join(inputJoinAccount: InputJoinAccount): Boolean
+    join(inputJoinAccount: InputJoinAccount): Account
 }
 
 type Token {
