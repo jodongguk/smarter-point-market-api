@@ -1,4 +1,4 @@
-package com.ksmarter.pointmarket.security.jwt;
+package com.ksmarter.pointmarket.security.jwtaa;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

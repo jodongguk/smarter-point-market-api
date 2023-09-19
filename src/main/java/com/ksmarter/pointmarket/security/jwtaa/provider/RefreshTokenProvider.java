@@ -1,6 +1,5 @@
-package com.ksmarter.pointmarket.security.jwt.provider;
+package com.ksmarter.pointmarket.security.jwtaa.provider;
 
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.Authentication;
@@ -32,10 +31,5 @@ public class RefreshTokenProvider extends TokenProvider {
                 .signWith(key, SignatureAlgorithm.HS512)
                 .setExpiration(validity)
                 .compact();
-    }
-
-    public long getTokenWeight(String token) {
-        Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
-        return Long.valueOf(String.valueOf(claims.get(WEIGHT_KEY)));
     }
 }

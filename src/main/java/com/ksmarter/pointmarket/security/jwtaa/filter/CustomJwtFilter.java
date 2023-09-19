@@ -1,19 +1,13 @@
-package com.ksmarter.pointmarket.security.jwt.filter;
+package com.ksmarter.pointmarket.security.jwtaa.filter;
 
-import com.ksmarter.pointmarket.security.jwt.exception.InvalidRefreshTokenException;
-import com.ksmarter.pointmarket.security.jwt.provider.TokenProvider;
-import jakarta.annotation.Resource;
+import com.ksmarter.pointmarket.security.jwtaa.provider.TokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;

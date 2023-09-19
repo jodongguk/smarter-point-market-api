@@ -1,4 +1,4 @@
-package com.ksmarter.pointmarket.security.jwt.provider;
+package com.ksmarter.pointmarket.security.jwtaa.provider;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;

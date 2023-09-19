@@ -1,6 +1,6 @@
-package com.ksmarter.pointmarket.security.jwt.exception;
+package com.ksmarter.pointmarket.security.jwtaa.exception;
 
-import com.ksmarter.pointmarket.security.jwt.enums.ErrorCode;
+import com.ksmarter.pointmarket.security.jwtaa.enums.ErrorCode;
 
 public class InvalidRefreshTokenException extends RuntimeException {
     public InvalidRefreshTokenException(){

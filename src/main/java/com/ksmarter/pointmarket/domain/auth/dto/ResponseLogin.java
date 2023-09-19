@@ -6,8 +6,11 @@ public record ResponseLogin() {
 
     @Builder
     public record Token(
+            String grantType,
             String accessToken,
-            String refreshToken
+            Long accessTokenExpirationTime,
+            String refreshToken,
+            Long refreshTokenExpirationTime
     ) {
     }
 }
