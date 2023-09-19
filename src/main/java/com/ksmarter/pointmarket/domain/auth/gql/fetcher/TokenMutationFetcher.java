@@ -2,7 +2,7 @@ package com.ksmarter.pointmarket.domain.auth.gql.fetcher;
 
 import com.ksmarter.pointmarket.domain.auth.dto.ResponseLogin;
 import com.ksmarter.pointmarket.domain.auth.service.LoginService;
-import com.ksmarter.pointmarket.security.jwtaa.filter.CustomJwtFilter;
+import com.ksmarter.pointmarket.security.jwt.filter.CustomJwtFilter;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsData;
 import com.netflix.graphql.dgs.DgsDataFetchingEnvironment;
