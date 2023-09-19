@@ -1,8 +1,8 @@
 package com.ksmarter.pointmarket.security;
 
-import com.ksmarter.pointmarket.security.jwtaa.JwtProperties;
-import com.ksmarter.pointmarket.security.jwtaa.provider.RefreshTokenProvider;
-import com.ksmarter.pointmarket.security.jwtaa.provider.TokenProvider;
+import com.ksmarter.pointmarket.security.jwt.JwtProperties;
+import com.ksmarter.pointmarket.security.jwt.provider.RefreshTokenProvider;
+import com.ksmarter.pointmarket.security.jwt.provider.TokenProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

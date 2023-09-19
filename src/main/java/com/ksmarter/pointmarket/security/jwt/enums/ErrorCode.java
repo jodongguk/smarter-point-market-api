@@ -1,4 +1,4 @@
-package com.ksmarter.pointmarket.security.jwtaa.enums;
+package com.ksmarter.pointmarket.security.jwt.enums;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
-package com.ksmarter.pointmarket.security.jwtaa.filter;
+package com.ksmarter.pointmarket.security.jwt.filter;
 
-import com.ksmarter.pointmarket.security.jwtaa.provider.TokenProvider;
+import com.ksmarter.pointmarket.security.jwt.provider.TokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;

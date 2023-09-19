@@ -1,93 +1,72 @@
 package com.ksmarter.pointmarket.domain.auth.service;
 
-import com.ksmarter.pointmarket.domain.auth.dto.RequestLogin;
+import com.ksmarter.pointmarket.domain.account.domain.Account;
+import com.ksmarter.pointmarket.domain.account.adapter.AccountAdapter;
 import com.ksmarter.pointmarket.domain.auth.dto.ResponseLogin;
-import com.ksmarter.pointmarket.domain.token.domain.RefreshToken;
-import com.ksmarter.pointmarket.domain.token.repository.RefreshTokenRedisRepository;
-import com.ksmarter.pointmarket.security.jwt.JwtTokenProvider;
-import com.ksmarter.pointmarket.utils.Helper;
-import jakarta.servlet.http.HttpServletRequest;
+import com.ksmarter.pointmarket.domain.account.repository.AccountRepository;
+import com.ksmarter.pointmarket.security.jwt.provider.RefreshTokenProvider;
+import com.ksmarter.pointmarket.security.jwt.provider.TokenProvider;
+import com.ksmarter.pointmarket.security.jwt.exception.InvalidRefreshTokenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
 public class LoginService {
-
-
-    private final JwtTokenProvider jwtTokenProvider;
-    private final RefreshTokenRedisRepository refreshTokenRedisRepository;
+    private final TokenProvider tokenProvider;
+    private final RefreshTokenProvider refreshTokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final AccountRepository accountRepository;
 
+    private final PasswordEncoder passwordEncoder;
 
-    public LoginService(JwtTokenProvider jwtTokenProvider, RefreshTokenRedisRepository refreshTokenRedisRepository, AuthenticationManagerBuilder authenticationManagerBuilder) {
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.refreshTokenRedisRepository = refreshTokenRedisRepository;
+    public LoginService(TokenProvider tokenProvider, RefreshTokenProvider refreshTokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
+        this.tokenProvider = tokenProvider;
+        this.refreshTokenProvider = refreshTokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
+        this.accountRepository = accountRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
+    public ResponseLogin.Token authenticate(String userid, String password) {
 
-    public RefreshToken login(HttpServletRequest request, RequestLogin.Login login) {
-        // 1. email, password 기반으로 Authentication 객체 생성
-        // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
-        UsernamePasswordAuthenticationToken authenticationToken = login.toAuthentication();
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userid, password);
 
-        // 2. 실제 검증 (사용자 비밀번호 확인)이 이루어지는 부분
-        // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
-        // 3. 인증 정보를 기반으로 JWT Token 생성
-        ResponseLogin.Token token = jwtTokenProvider.generateToken(authentication);
+        String accessToken = tokenProvider.createToken(authentication);
 
-        // 4. Redis RefreshToken 저장
-        RefreshToken refreshToken = refreshTokenRedisRepository.save(RefreshToken.builder()
-                .id(authentication.getName())
-                .ip(Helper.getClientIp(request))
-                .authorities(authentication.getAuthorities())
-                .refreshToken(token.refreshToken())
-                .build());
+        Long tokenWeight = ((AccountAdapter) authentication.getPrincipal()).getAccount().getTokenWeight();
+        String refreshToken = refreshTokenProvider.createToken(authentication, tokenWeight);
 
-        return refreshToken;
+        return ResponseLogin.Token.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
     }
 
-    public ResponseEntity<?> refresh(HttpServletRequest request) {
-        //TODO:: 1, 2 는 JwtAuthenticationFilter 동작과 중복되는 부분, 때문에 jwt filter 에서 다른 key 값으로 refresh token 값을
-        //넘겨주고 여기서 받아서 처리하는 방법도 적용해 볼 수 있을 듯
+    @Transactional(readOnly = true)
+    public ResponseLogin.Token refreshToken(String refreshToken) {
 
-        //1. Request Header 에서 JWT Token 추출
-        String token = jwtTokenProvider.resolveToken(request);
+        if (!refreshTokenProvider.validateToken(refreshToken)) throw new InvalidRefreshTokenException();
 
-        //2. validateToken 메서드로 토큰 유효성 검사
-        if (token != null && jwtTokenProvider.validateToken(token)) {
-            //3. refresh token 인지 확인
-            if (jwtTokenProvider.isRefreshToken(token)) {
-                //refresh token
-                RefreshToken refreshToken = refreshTokenRedisRepository.findByRefreshToken(token);
-                if (refreshToken != null) {
-                    //4. 최초 로그인한 ip 와 같은지 확인 (처리 방식에 따라 재발급을 하지 않거나 메일 등의 알림을 주는 방법이 있음)
-                    String currentIpAddress = Helper.getClientIp(request);
-                    if (refreshToken.getIp().equals(currentIpAddress)) {
-                        // 5. Redis 에 저장된 RefreshToken 정보를 기반으로 JWT Token 생성
-                        ResponseLogin.Token tokenInfo = jwtTokenProvider.generateToken(refreshToken.getId(), refreshToken.getAuthorities());
+        Authentication authentication = refreshTokenProvider.getAuthentication(refreshToken);
 
-                        // 4. Redis RefreshToken update
-                        refreshTokenRedisRepository.save(RefreshToken.builder()
-                                .id(refreshToken.getId())
-                                .ip(currentIpAddress)
-                                .authorities(refreshToken.getAuthorities())
-                                .refreshToken(tokenInfo.refreshToken())
-                                .build());
+        Account account = accountRepository.findOneWithAuthoritiesByUserid(authentication.getName())
+                .orElseThrow(() -> new UsernameNotFoundException(authentication.getName() + "을 찾을 수 없습니다"));
 
-                        return response.success(tokenInfo);
-                    }
-                }
-            }
-        }
+        String accessToken = tokenProvider.createToken(authentication);
 
-        return response.fail("토큰 갱신에 실패했습니다.");
+        return ResponseLogin.Token.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
     }
 
 }

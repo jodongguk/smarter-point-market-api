@@ -1,4 +1,4 @@
-package com.ksmarter.pointmarket.security.jwtaa.handler;
+package com.ksmarter.pointmarket.security.jwt.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ksmarter.pointmarket.domain.common.dto.CommonResponse;
@@ -7,31 +7,35 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-public class JwtAccessDeniedHandler implements AccessDeniedHandler {
-    private final ObjectMapper objectMapper;
+public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
+    private final ObjectMapper objectMapper;
     @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
-        //필요한 권한이 없이 접근하려 할때 403
+    public void commence(HttpServletRequest request,
+                         HttpServletResponse response,
+                         AuthenticationException authException) throws IOException {
+        // 유효한 자격증명을 제공하지 않고 접근하려 할때 401(인증 실패)
+        //response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         ErrorResponse error = ErrorResponse.builder()
-                .status(HttpStatus.FORBIDDEN.value())
-                .message("FORBIDDEN")
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .message("UNAUTHORIZED")
                 .code("AUTH")
                 .build();
 
         response.setContentType("application/json");
-        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.getOutputStream().println(objectMapper.writeValueAsString(CommonResponse.builder()
                 .success(false)
                 .error(error)
                 .build()));
     }
+
 }

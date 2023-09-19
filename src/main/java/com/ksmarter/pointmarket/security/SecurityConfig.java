@@ -1,25 +1,29 @@
 package com.ksmarter.pointmarket.security;
 
-import com.ksmarter.pointmarket.security.jwtaa.filter.CustomJwtFilter;
-import com.ksmarter.pointmarket.security.jwtaa.handler.JwtAccessDeniedHandler;
-import com.ksmarter.pointmarket.security.jwtaa.handler.JwtAuthenticationEntryPoint;
-import com.ksmarter.pointmarket.security.jwt.JwtAuthenticationFilter;
-import com.ksmarter.pointmarket.security.jwt.JwtTokenProvider;
+import com.ksmarter.pointmarket.security.jwt.filter.CustomJwtFilter;
+import com.ksmarter.pointmarket.security.jwt.handler.JwtAccessDeniedHandler;
+import com.ksmarter.pointmarket.security.jwt.handler.JwtAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 @Configuration
@@ -31,17 +35,14 @@ public class SecurityConfig {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
-    private final JwtTokenProvider jwtTokenProvider;
-
     public SecurityConfig(
             CorsFilter corsFilter,
             JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
-            JwtAccessDeniedHandler jwtAccessDeniedHandler,
-            JwtTokenProvider jwtTokenProvider) {
+            JwtAccessDeniedHandler jwtAccessDeniedHandler
+    ) {
         this.corsFilter = corsFilter;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
-        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Bean
@@ -80,7 +81,6 @@ public class SecurityConfig {
 
         httpSecurity
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers(
                                 "/favicon.ico",
@@ -91,6 +91,7 @@ public class SecurityConfig {
                         .anyRequest()
                         .authenticated()
                 )
+                .addFilterBefore(customJwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)
                 //.cors(Customizer.withDefaults())
