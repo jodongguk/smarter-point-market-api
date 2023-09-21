@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -43,7 +44,12 @@ public class UserService {
         accountBuilder.activated(true);
 
         Account account = accountBuilder.build();
-        account.addAuthorities(Set.of(AccountAuthority.builder().authority(Authority.builder().authorityName("ROLE_INSTITUTE").build()).build()));
+
+        Authority roleInstitute = authorityRepository.findById("ROLE_INSTITUTE").orElseThrow();
+
+        account.addAuthorities(Set.of(
+                AccountAuthority.builder().authority(roleInstitute).build()
+        ));
 
         return accountRepository.save(account);
     }
