@@ -3,10 +3,17 @@ package com.ksmarter.pointmarket.domain.institute.domain;
 import com.ksmarter.pointmarket.domain.account.domain.Account;
 import com.ksmarter.pointmarket.domain.account.domain.AccountInstitute;
 import com.ksmarter.pointmarket.domain.common.domain.BaseEntity;
+import com.ksmarter.pointmarket.generated.types.InstituteFilter;
+import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Set;
 
@@ -55,4 +62,23 @@ public class Institute extends BaseEntity {
 
     @OneToMany(mappedBy = "institute")
     private Set<InstituteChildren> children;
+
+
+    public static Specification<Institute> inputFilterToSpec(InstituteFilter filter) {
+        return (root, query, builder) -> {
+            Predicate p = builder.conjunction();
+
+            if(StringUtils.isNotEmpty(filter.getName())) {
+                p = builder.and(p, builder.equal(root.get("name"), filter.getName()));
+            }
+            if(StringUtils.isNotEmpty(filter.getOwner())) {
+                p = builder.and(p, builder.equal(root.get("owner"), filter.getOwner()));
+            }
+            if(StringUtils.isNotEmpty(filter.getBusinessRegistrationNumber())) {
+                p = builder.and(p, builder.equal(root.get("businessRegistrationNumber"), filter.getBusinessRegistrationNumber()));
+            }
+
+            return p;
+        };
+    }
 }

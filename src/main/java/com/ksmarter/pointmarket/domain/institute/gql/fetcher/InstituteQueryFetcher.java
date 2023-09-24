@@ -6,6 +6,7 @@ import com.ksmarter.pointmarket.domain.account.repository.AccountRepository;
 import com.ksmarter.pointmarket.domain.institute.domain.Institute;
 import com.ksmarter.pointmarket.domain.institute.repository.InstituteRepository;
 import com.ksmarter.pointmarket.generated.DgsConstants;
+import com.ksmarter.pointmarket.generated.types.InstituteFilter;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsData;
 import com.netflix.graphql.dgs.InputArgument;
@@ -13,6 +14,7 @@ import com.netflix.graphql.dgs.exceptions.DgsEntityNotFoundException;
 import graphql.relay.Connection;
 import graphql.relay.SimpleListConnection;
 import graphql.schema.DataFetchingEnvironment;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
@@ -29,10 +31,10 @@ public class InstituteQueryFetcher {
         this.instituteRepository = instituteRepository;
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_INSTITUTE')")
     @DgsData(parentType = DgsConstants.QUERYRESOLVER.TYPE_NAME)
-    public Connection<Institute> institutes(DataFetchingEnvironment dfe) {
-        List<Institute> institutes = instituteRepository.findAll();
+    public Connection<Institute> institutes(DataFetchingEnvironment dfe, @InputArgument("filter") InstituteFilter instituteFilter) {
+
+        List<Institute> institutes = instituteRepository.findAll(Institute.inputFilterToSpec(instituteFilter));
         return new SimpleListConnection<>(institutes).get(dfe);
     }
 

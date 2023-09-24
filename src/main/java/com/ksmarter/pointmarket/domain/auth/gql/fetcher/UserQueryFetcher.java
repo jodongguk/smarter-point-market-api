@@ -30,4 +30,5 @@ public class UserQueryFetcher {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return accountJoinService.getUserByUserId(userDetails.getUsername());
     }
+
 }

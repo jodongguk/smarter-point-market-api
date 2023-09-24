@@ -21,4 +21,16 @@ type Institute @connection {
 input InstituteFilter {
     name: String
     owner: String
+    businessRegistrationNumber: String
+}
+
+input InputInstitute {
+    id: ID!
+    name: String
+    owner: String
+    tel: String
+    zip: String
+    addr1: String
+    addr2: String
+    businessRegistrationNumber: String
 }

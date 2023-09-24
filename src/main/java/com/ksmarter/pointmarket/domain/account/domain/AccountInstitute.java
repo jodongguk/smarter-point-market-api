@@ -4,10 +4,7 @@ import com.ksmarter.pointmarket.domain.common.domain.BaseEntity;
 import com.ksmarter.pointmarket.domain.franchisor.domain.Franchisor;
 import com.ksmarter.pointmarket.domain.institute.domain.Institute;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import java.io.Serializable;
@@ -22,6 +19,7 @@ public class AccountInstitute extends BaseEntity {
     @EmbeddedId
     private AccountInstituteId id = new AccountInstituteId();
 
+    @Setter
     @ManyToOne
     @JoinColumn(name = "account_id")
     @MapsId("accountId")
@@ -31,6 +29,12 @@ public class AccountInstitute extends BaseEntity {
     @JoinColumn(name = "institute_id")
     @MapsId("instituteId")
     private Institute institute;
+
+    @Builder
+    public AccountInstitute(Account account, Institute institute) {
+        this.account = account;
+        this.institute = institute;
+    }
 
     @Embeddable
     @Getter

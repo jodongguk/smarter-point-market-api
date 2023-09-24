@@ -93,4 +93,8 @@ public class Account extends BaseEntity {
         authorities.forEach(accountAuthority -> accountAuthority.setAccount(this));
     }
 
+    public void addInstitutes(Set<AccountInstitute> institutes) {
+        this.institutes = institutes;
+        institutes.forEach(accountInstitute -> accountInstitute.setAccount(this));
+    }
 }

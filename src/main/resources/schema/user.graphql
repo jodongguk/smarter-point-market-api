@@ -20,4 +20,6 @@ input InputJoinAccount {
     name: String
     phoneNumber: String
     birthDate: String
+
+    institutes: [InputInstitute]
 }

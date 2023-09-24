@@ -61,7 +61,7 @@ public class AccountQueryFetcher {
         return accountRepository.findById(id).orElseThrow(DgsEntityNotFoundException::new);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @DgsData(parentType = DgsConstants.ACCOUNT.TYPE_NAME, field = DgsConstants.ACCOUNT.Authorities)
     public Set<Authority> authorities(DgsDataFetchingEnvironment dfe) {
         Account account = dfe.getSource();
