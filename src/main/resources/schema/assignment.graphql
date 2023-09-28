@@ -1,15 +1,29 @@
 extend type QueryResolver {
     assignments(filter: AssignmentFilter, first:Int, after:String): AssignmentConnection
 }
+extend type MutationResolver {
+    assignment(inputAssignment: InputAssignment): Assignment
+}
 
 type Assignment @connection {
     id: ID!
     institute: Institute
+    title: String
     rewardCredit: Int
-    startDate: String
-    endDate: String
+    startDate: Date
+    endDate: Date
 }
 
 input AssignmentFilter {
     id: ID
+    institute: InputInstitute
+}
+
+input InputAssignment {
+    id: ID
+    institute: InputInstitute
+    title: String
+    rewardCredit: Int
+    startDate: Date
+    endDate: Date
 }

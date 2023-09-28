@@ -8,7 +8,7 @@ type Account @connection {
 
     userid: String
     name: String
-    birthDate: String
+    birthDate: Date
     phoneNumber: String
 
     authorities: [Authority]

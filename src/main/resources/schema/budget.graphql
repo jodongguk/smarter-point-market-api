@@ -1,5 +1,9 @@
 extend type QueryResolver {
-    budgets(filter: BadgeFilter, first:Int, after:String): BudgetConnection
+    budgets(filter: BudgetFilter, first:Int, after:String): BudgetConnection
+}
+
+extend type MutationResolver {
+    budget(inputBudget: InputBudget): Budget
 }
 
 type Budget @connection {
@@ -7,12 +11,20 @@ type Budget @connection {
 
     institute: Institute
     budgetAmount: Int
-    startDate: String
-    endDate: String
+    startDate: Date
+    endDate: Date
 }
 
 input BudgetFilter {
-    instituteId: String
-    startDate: String
-    endDate: String
+    institute: InputInstitute
+    startDate: Date
+    endDate: Date
+}
+
+input InputBudget {
+    id: ID,
+    institute: InputInstitute
+    startDate: Date
+    endDate: Date
+    budgetAmount: Int
 }

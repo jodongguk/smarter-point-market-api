@@ -19,7 +19,7 @@ input InputJoinAccount {
 
     name: String
     phoneNumber: String
-    birthDate: String
+    birthDate: Date
 
     institutes: [InputInstitute]
 }

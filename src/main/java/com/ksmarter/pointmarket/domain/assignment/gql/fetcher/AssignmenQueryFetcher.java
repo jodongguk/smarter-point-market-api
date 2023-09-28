@@ -15,11 +15,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import java.util.List;
 
 @DgsComponent
-public class AssignmenQuerytFetcher {
+public class AssignmenQueryFetcher {
 
     private final AssignmentRepository assignmentRepository;
 
-    public AssignmenQuerytFetcher(AssignmentRepository questRepository) {
+    public AssignmenQueryFetcher(AssignmentRepository questRepository) {
         this.assignmentRepository = questRepository;
     }
 

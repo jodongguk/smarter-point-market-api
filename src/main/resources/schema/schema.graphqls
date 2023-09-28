@@ -1,4 +1,5 @@
 directive @connection on OBJECT
+scalar Date
 
 type QueryResolver {
     service: String

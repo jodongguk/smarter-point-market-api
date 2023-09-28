@@ -32,7 +32,8 @@ public class InstituteQueryFetcher {
     }
 
     @DgsData(parentType = DgsConstants.QUERYRESOLVER.TYPE_NAME)
-    public Connection<Institute> institutes(DataFetchingEnvironment dfe, @InputArgument("filter") InstituteFilter instituteFilter) {
+    public Connection<Institute> institutes(DataFetchingEnvironment dfe,
+                                            @InputArgument("filter") InstituteFilter instituteFilter) {
 
         List<Institute> institutes = instituteRepository.findAll(Institute.inputFilterToSpec(instituteFilter));
         return new SimpleListConnection<>(institutes).get(dfe);

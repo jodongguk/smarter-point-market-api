@@ -46,25 +46,24 @@ public class UserService {
                 .name(inputJoinAccount.getName())
                 .phoneNumber(inputJoinAccount.getPhoneNumber());
 
-        if(StringUtils.isNotEmpty(inputJoinAccount.getBirthDate())) {
-            accountBuilder.birthDate(LocalDate.parse(inputJoinAccount.getBirthDate()));
+        if(inputJoinAccount.getBirthDate() != null) {
+            accountBuilder.birthDate(inputJoinAccount.getBirthDate());
         }
         accountBuilder.activated(true);
 
         Account account = accountBuilder.build();
 
-        Authority roleInstitute = authorityRepository.findById("ROLE_INSTITUTE").orElseThrow();
-
-        account.addAuthorities(Set.of(
-                AccountAuthority.builder().authority(roleInstitute).build()
-        ));
-
         Set<AccountInstitute> accountInstitutes = new HashSet<>();
         Optional.ofNullable(inputJoinAccount.getInstitutes()).orElseGet(Collections::emptyList).forEach(inputInstitute -> {
-
             Institute institute = instituteRepository.findById(Long.parseLong(inputInstitute.getId())).orElseThrow();
             accountInstitutes.add(AccountInstitute.builder().institute(institute).build());
         });
+
+        // 권한부여
+        Authority roleInstitute = authorityRepository.findById("ROLE_INSTITUTE").orElseThrow();
+        account.addAuthorities(Set.of(
+                AccountAuthority.builder().authority(roleInstitute).build()
+        ));
 
         account.addInstitutes(accountInstitutes);
 
