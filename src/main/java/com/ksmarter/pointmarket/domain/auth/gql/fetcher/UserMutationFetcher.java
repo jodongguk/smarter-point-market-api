@@ -18,13 +18,24 @@ public class UserMutationFetcher {
         this.userService = userService;
     }
 
-
     @PermitAll
     @DgsData(parentType = DgsConstants.MUTATIONRESOLVER.TYPE_NAME, field = DgsConstants.MUTATIONRESOLVER.Join)
-    public Account join(DgsDataFetchingEnvironment dfe, @InputArgument InputJoinAccount inputJoinAccount) {
+    public Account join(DgsDataFetchingEnvironment dfe,
+                        @InputArgument InputJoinAccount inputJoinAccount) {
 
         Account account = userService.joinByInputJoinAccount(inputJoinAccount);
 
         return account;
     }
+
+    @PermitAll
+    @DgsData(parentType = DgsConstants.MUTATIONRESOLVER.TYPE_NAME, field = DgsConstants.MUTATIONRESOLVER.Children)
+    public Account children(DgsDataFetchingEnvironment dfe,
+                        @InputArgument InputJoinAccount inputJoinAccount) {
+
+        Account account = userService.addByChildren(inputJoinAccount);
+
+        return account;
+    }
+
 }

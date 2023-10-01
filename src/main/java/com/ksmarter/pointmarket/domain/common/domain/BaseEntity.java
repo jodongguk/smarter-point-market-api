@@ -1,10 +1,8 @@
 package com.ksmarter.pointmarket.domain.common.domain;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MappedSuperclass;
+import com.ksmarter.pointmarket.domain.account.domain.Account;
+import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -23,15 +21,17 @@ public class BaseEntity {
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "created_by", updatable = false)
+    @JoinColumn(name = "created_by", updatable = false)
+    @ManyToOne
     @CreatedBy
-    private String createdBy;
+    private Account createdBy;
 
     @LastModifiedDate
     @Column
     private LocalDateTime updated_at;
 
-    @Column(name = "updated_by")
+    @JoinColumn(name = "updated_by")
+    @ManyToOne
     @LastModifiedBy
-    private String updatedBy;
+    private Account updatedBy;
 }

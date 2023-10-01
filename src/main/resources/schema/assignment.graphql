@@ -17,6 +17,7 @@ type Assignment @connection {
 input AssignmentFilter {
     id: ID
     institute: InputInstitute
+    children: ID
 }
 
 input InputAssignment {

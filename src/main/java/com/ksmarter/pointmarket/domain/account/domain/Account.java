@@ -1,13 +1,20 @@
 package com.ksmarter.pointmarket.domain.account.domain;
 
+import com.ksmarter.pointmarket.domain.assignment.domain.Assignment;
 import com.ksmarter.pointmarket.domain.common.domain.BaseEntity;
+import com.ksmarter.pointmarket.domain.common.enums.AuthorityRoles;
 import com.ksmarter.pointmarket.domain.credit.domain.Credit;
 import com.ksmarter.pointmarket.domain.institute.domain.InstituteChildren;
+import com.ksmarter.pointmarket.generated.types.AccountFilter;
+import com.ksmarter.pointmarket.generated.types.AssignmentFilter;
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.Predicate;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Comment;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -96,5 +103,30 @@ public class Account extends BaseEntity {
     public void addInstitutes(Set<AccountInstitute> institutes) {
         this.institutes = institutes;
         institutes.forEach(accountInstitute -> accountInstitute.setAccount(this));
+    }
+
+    public void addChildrens(Set<AccountChildren> childrens) {
+        this.childrens = childrens;
+        childrens.forEach(accountChildren -> accountChildren.setParent(this));
+    }
+
+    public static Specification<Account> inputFilterToSpec(AccountFilter filter) {
+        return (root, query, builder) -> {
+            Predicate p = builder.conjunction();
+
+            if(StringUtils.isNotEmpty(filter.getName())) {
+                p = builder.and(p, builder.like(root.get("name"), "%" + filter.getName() + "%"));
+            }
+
+            if(filter.getBirthDate() != null) {
+                p = builder.and(p, builder.equal(root.get("birthDate"), filter.getBirthDate()));
+            }
+
+            if(StringUtils.isNotEmpty(filter.getRole())) {
+                p = builder.and(p, builder.equal(root.get("authorities").get("authority").get("authorityName"), AuthorityRoles.of(filter.getRole()).getValue()));
+            }
+
+            return p;
+        };
     }
 }

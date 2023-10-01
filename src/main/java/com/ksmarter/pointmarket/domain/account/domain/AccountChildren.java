@@ -3,10 +3,7 @@ package com.ksmarter.pointmarket.domain.account.domain;
 import com.ksmarter.pointmarket.domain.common.domain.BaseEntity;
 import com.ksmarter.pointmarket.domain.institute.domain.Institute;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import java.io.Serializable;
@@ -21,6 +18,7 @@ public class AccountChildren extends BaseEntity {
     @EmbeddedId
     private AccountChildrenId id = new AccountChildrenId();
 
+    @Setter
     @ManyToOne
     @JoinColumn(name = "parent_id")
     @MapsId("parentId")
@@ -30,6 +28,12 @@ public class AccountChildren extends BaseEntity {
     @JoinColumn(name = "children_id")
     @MapsId("childrenId")
     private Account children;
+
+    @Builder
+    public AccountChildren(Account parent, Account children) {
+        this.parent = parent;
+        this.children = children;
+    }
 
     @Embeddable
     @Getter

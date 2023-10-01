@@ -25,7 +25,7 @@ input InstituteFilter {
 }
 
 input InputInstitute {
-    id: ID!
+    id: ID
     name: String
     owner: String
     tel: String

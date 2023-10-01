@@ -20,7 +20,16 @@ type Account @connection {
 }
 
 input AccountFilter {
+    role: String
     userid: String
     name: String
+    birthDate: Date
+    phoneNumber: String
     activated: Boolean
+}
+
+input InputAccount {
+    id: ID
+    userid: String
+    name: String
 }

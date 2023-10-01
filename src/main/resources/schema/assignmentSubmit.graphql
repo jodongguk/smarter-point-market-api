@@ -1,14 +1,30 @@
 extend type QueryResolver {
-    assignmentSubmits(filter: AssignmentSubmitFilter, first:Int, after:String): AssignmentSubmit
+    assignmentSubmits(filter: AssignmentSubmitFilter): [AssignmentSubmit]
+}
+extend type MutationResolver {
+    assignmentSubmit(inputAssignmentSubmit: InputAssignmentSubmit): AssignmentSubmit
 }
 
 type AssignmentSubmit @connection {
     id: ID!
     institute: Institute
+    account: Account
+    assignment: Assignment
     assignmentSubmitType: String
     comment: String
 }
 
 input AssignmentSubmitFilter {
     id: ID
+    assignment: InputAssignment
+    account: InputAccount
+    institute: InputInstitute
+}
+
+input InputAssignmentSubmit {
+    id: ID,
+    account: InputAccount
+    assignment: InputAssignment
+    comment: String
+    assignmentSubmitType: String
 }

@@ -26,7 +26,7 @@ public class Badge extends BaseEntity {
     @Comment("배지 코드")
     @Column(name = "badge_type", nullable = false, length = 20)
     @Convert(converter = BadgeTypesConverter.class)
-    private BadgeTypes assignmentSubmitType = BadgeTypes.COMPLIMENT;
+    private BadgeTypes badgeTypes = BadgeTypes.COMPLIMENT;
 
     @Comment("배지 제목")
     @Column(name = "title", nullable = false)

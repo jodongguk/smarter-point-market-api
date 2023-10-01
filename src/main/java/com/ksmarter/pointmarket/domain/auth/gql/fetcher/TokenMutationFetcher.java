@@ -24,9 +24,10 @@ public class TokenMutationFetcher {
     @DgsData(parentType = "MutationResolver")
     public ResponseLogin.Token login(DgsDataFetchingEnvironment dfe,
                                      @InputArgument String userid,
-                                     @InputArgument String password) {
+                                     @InputArgument String password,
+                                     @InputArgument String role) {
 
-        ResponseLogin.Token token = loginService.authenticate(userid, password);
+        ResponseLogin.Token token = loginService.authenticate(userid, password, role);
 
         this.setAuthorizationToken(dfe, token);
 

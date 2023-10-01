@@ -2,11 +2,15 @@ package com.ksmarter.pointmarket.domain.assignment.domain;
 
 import com.ksmarter.pointmarket.domain.common.domain.BaseEntity;
 import com.ksmarter.pointmarket.domain.institute.domain.Institute;
+import com.ksmarter.pointmarket.generated.types.AssignmentFilter;
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.Predicate;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Comment;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -57,5 +61,22 @@ public class Assignment extends BaseEntity {
         this.startDate = startDate;
         this.endDate = endDate;
         this.rewardCredit = rewardCredit;
+    }
+
+    public static Specification<Assignment> inputFilterToSpec(AssignmentFilter filter) {
+        return (root, query, builder) -> {
+            Predicate p = builder.conjunction();
+
+            if(filter.getInstitute() != null) {
+                if(StringUtils.isNotEmpty(filter.getInstitute().getId())) {
+                    p = builder.and(p, builder.equal(root.get("institute").get("id"), filter.getInstitute().getId()));
+                }
+            }
+            if(StringUtils.isNotEmpty(filter.getChildren())) {
+                p = builder.and(p, builder.equal(root.get("institute").get("children").get("children").get("id"), filter.getChildren()));
+            }
+
+            return p;
+        };
     }
 }
