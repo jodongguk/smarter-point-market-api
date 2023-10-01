@@ -5,4 +5,7 @@ extend type QueryResolver {
 type Credit {
     account: Account
     balance: Float
+
+    createdAt: Date
+    updatedAt: Date
 }

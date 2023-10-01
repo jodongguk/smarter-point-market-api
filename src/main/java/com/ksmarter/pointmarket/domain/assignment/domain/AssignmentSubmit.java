@@ -8,6 +8,7 @@ import com.ksmarter.pointmarket.domain.common.enums.converter.AssignmentSubmitTy
 import com.ksmarter.pointmarket.generated.types.AccountFilter;
 import com.ksmarter.pointmarket.generated.types.AssignmentSubmitFilter;
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Predicate;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,6 +17,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Comment;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.domain.Specification;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "assignment_submit")
@@ -61,6 +65,16 @@ public class AssignmentSubmit extends BaseEntity {
 
             if(StringUtils.isNotEmpty(filter.getAssignment().getId())) {
                 p = builder.and(p, builder.equal(root.get("assignment").get("id"), filter.getAssignment().getId()));
+            }
+
+            List<AssignmentSubmitTypes> types = Optional.ofNullable(filter.getAssignmentSubmitType())
+                    .orElseGet(ArrayList::new)
+                    .stream()
+                    .map(s -> AssignmentSubmitTypes.of(s))
+                    .collect(Collectors.toList());
+
+            if(!types.isEmpty()) {
+                p = builder.and(p, root.get("assignmentSubmitType").in(types));
             }
 
             return p;

@@ -7,6 +7,9 @@ type Badge @connection {
     title: String
     description: String
     recipient: Account
+
+    createdAt: Date
+    updatedAt: Date
 }
 
 input BadgeFilter {

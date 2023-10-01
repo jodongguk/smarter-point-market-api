@@ -16,6 +16,9 @@ type Institute @connection {
 
     accounts: [Account]
     children: [Account]
+
+    createdAt: Date
+    updatedAt: Date
 }
 
 input InstituteFilter {

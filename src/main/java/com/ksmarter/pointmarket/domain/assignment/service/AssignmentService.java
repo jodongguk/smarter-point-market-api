@@ -12,8 +12,13 @@ import com.ksmarter.pointmarket.domain.institute.repository.InstituteRepository;
 import com.ksmarter.pointmarket.generated.types.InputAssignment;
 import com.ksmarter.pointmarket.generated.types.InputAssignmentSubmit;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AssignmentService {
@@ -30,7 +35,7 @@ public class AssignmentService {
         this.assignmentSubmitRepository = assignmentSubmitRepository;
     }
 
-
+    @Transactional
     public Assignment saveByInputAssignment(InputAssignment inputAssignment) {
 
         Assignment.AssignmentBuilder assignmentBuilder = Assignment.builder();
@@ -46,6 +51,7 @@ public class AssignmentService {
         return assignmentRepository.save(assignmentBuilder.build());
     }
 
+    @Transactional
     public AssignmentSubmit saveByInputAssignmentSubmit(InputAssignmentSubmit inputAssignmentSubmit) {
 
         AssignmentSubmit.AssignmentSubmitBuilder assignmentSubmitBuilder = AssignmentSubmit.builder();
@@ -59,5 +65,15 @@ public class AssignmentService {
         assignmentSubmitBuilder.assignmentSubmitType(AssignmentSubmitTypes.STANDBY);
 
         return assignmentSubmitRepository.save(assignmentSubmitBuilder.build());
+    }
+
+    @Transactional
+    public List<AssignmentSubmit> saveByInputAssignmentSubmitType(List<InputAssignmentSubmit> list) {
+
+        Optional.ofNullable(list)
+                .orElseGet(Collections::emptyList)
+                .forEach(submit -> assignmentSubmitRepository.updateAssignmentSubmitTypeById(AssignmentSubmitTypes.of(submit.getAssignmentSubmitType()), Long.parseLong(submit.getId())));
+
+        return Collections.EMPTY_LIST;
     }
 }

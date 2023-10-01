@@ -12,6 +12,9 @@ type Assignment @connection {
     rewardCredit: Int
     startDate: Date
     endDate: Date
+
+    createdAt: Date
+    updatedAt: Date
 }
 
 input AssignmentFilter {

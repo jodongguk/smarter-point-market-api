@@ -17,6 +17,9 @@ type Account @connection {
     franchisors: [Franchisor]
     attendInstitutes: [Account]
     credit: Credit
+
+    createdAt: Date
+    updatedAt: Date
 }
 
 input AccountFilter {

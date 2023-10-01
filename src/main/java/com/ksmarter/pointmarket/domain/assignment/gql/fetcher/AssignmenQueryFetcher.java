@@ -29,6 +29,15 @@ public class AssignmenQueryFetcher {
         this.assignmentSubmitRepository = assignmentSubmitRepository;
     }
 
+    /**
+     * 포인트마켓 > 일반유저 > 과제 목록
+     *
+     * @param dfe
+     * @param filter
+     * @param first
+     * @param after
+     * @return
+     */
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     @DgsData(parentType = DgsConstants.QUERYRESOLVER.TYPE_NAME)
     public Connection<Assignment> assignments(DataFetchingEnvironment dfe,
@@ -41,10 +50,17 @@ public class AssignmenQueryFetcher {
         return new SimpleListConnection<>(quests).get(dfe);
     }
 
+    /**
+     * 포인트마켓 > 일반유저 > 과제 제출 목록
+     *
+     * @param dfe
+     * @param filter
+     * @return
+     */
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     @DgsData(parentType = DgsConstants.QUERYRESOLVER.TYPE_NAME)
     public List<AssignmentSubmit> assignmentSubmits(DataFetchingEnvironment dfe,
-                                                          @InputArgument AssignmentSubmitFilter filter) {
+                                                    @InputArgument AssignmentSubmitFilter filter) {
         List<AssignmentSubmit> assignmentSubmits = assignmentSubmitRepository.findAll(AssignmentSubmit.inputFilterToSpec(filter));
         return assignmentSubmits;
     }

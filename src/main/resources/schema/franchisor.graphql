@@ -15,6 +15,9 @@ type Franchisor @connection {
     business_registration_number: String
 
     accounts: [Account]
+
+    createdAt: Date
+    updatedAt: Date
 }
 
 input FranchisorFilter {

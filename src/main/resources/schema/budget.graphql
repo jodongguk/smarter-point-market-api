@@ -13,6 +13,9 @@ type Budget @connection {
     budgetAmount: Int
     startDate: Date
     endDate: Date
+
+    createdAt: Date
+    updatedAt: Date
 }
 
 input BudgetFilter {

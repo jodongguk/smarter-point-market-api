@@ -3,6 +3,7 @@ extend type QueryResolver {
 }
 extend type MutationResolver {
     assignmentSubmit(inputAssignmentSubmit: InputAssignmentSubmit): AssignmentSubmit
+    assignmentSubmitType(list: [InputAssignmentSubmit]): [AssignmentSubmit]
 }
 
 type AssignmentSubmit @connection {
@@ -12,6 +13,8 @@ type AssignmentSubmit @connection {
     assignment: Assignment
     assignmentSubmitType: String
     comment: String
+    createdAt: Date
+    updatedAt: Date
 }
 
 input AssignmentSubmitFilter {
@@ -19,6 +22,7 @@ input AssignmentSubmitFilter {
     assignment: InputAssignment
     account: InputAccount
     institute: InputInstitute
+    assignmentSubmitType: [String]
 }
 
 input InputAssignmentSubmit {
